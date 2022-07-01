@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "test:ci": "ng test:ci --coverage",
+    "pr-ci": "ng lint & ng run ng-landing:test-ci",
     "lint": "ng lint"
   },
   "private": true,
