@@ -30,4 +30,4 @@ jobs:
         uses: codecov/codecov-action@v3
         if: always()
         with:
-          flags: api
+          flags: api,${GITHUB_REF##*/}
