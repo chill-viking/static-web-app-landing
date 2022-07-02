@@ -1,0 +1,32 @@
+name: CI Angular
+
+# Controls when the workflow will run
+on:
+  push:
+    branches: [main]
+    paths:
+     - 'ng-landing/**'
+  pull_request:
+    branches: [main]
+    paths:
+     - 'ng-landing/**'
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ng-landing
+    name: angular test coverage update
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run Karma tests
+        run: |
+          npm i
+          npm run pr-ci
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        if: always()
+        with:
+          flags: frontend
