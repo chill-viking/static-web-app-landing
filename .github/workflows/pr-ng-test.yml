@@ -1,4 +1,4 @@
-name: CI
+name: CI Angular
 
 # Controls when the workflow will run
 on:
@@ -8,7 +8,7 @@ on:
      - 'ng-landing/**'
 
 jobs:
-  angular-test-coverage:
+  lint-and-test:
     runs-on: ubuntu-latest
     name: angular test coverage update
     steps:
