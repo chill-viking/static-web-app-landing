@@ -3,7 +3,7 @@ name: CI Angular
 # Controls when the workflow will run
 on:
   push:
-    branches: [main]
+    branches: [main, dev, staging]
     paths:
      - 'ng-landing/**'
   pull_request:
@@ -29,4 +29,4 @@ jobs:
         uses: codecov/codecov-action@v3
         if: always()
         with:
-          flags: frontend
+          flags: frontend,${GITHUB_REF##*/}

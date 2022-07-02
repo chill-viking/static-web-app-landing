@@ -2,7 +2,7 @@ name: CI API
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev, staging]
     paths:
      - 'api/**'
   pull_request:
@@ -16,6 +16,7 @@ jobs:
     defaults:
       run:
         working-directory: api
+    name: dotnet test coverage update
     steps:
       - uses: actions/checkout@v3
       - name: Setup dotnet
@@ -30,4 +31,4 @@ jobs:
         uses: codecov/codecov-action@v3
         if: always()
         with:
-          flags: api
+          flags: api,${GITHUB_REF##*/}
