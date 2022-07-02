@@ -1,5 +1,7 @@
 # static-web-app-landing
 
+[![codecov](https://codecov.io/gh/chill-viking/static-web-app-landing/branch/main/graph/badge.svg?token=I26FZVORCG)](https://codecov.io/gh/chill-viking/static-web-app-landing)
+
 This is a project I've started as a means to get more familiar with Azure Static Web Apps, Azure Functions and GitHub.
 
 The prime purpose for this app is as a landing page for my own website.
