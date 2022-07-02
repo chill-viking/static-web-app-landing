@@ -49,7 +49,7 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('h2')?.textContent).toContain('Hello world');
   });
 
-  fdescribe('OnInit', () => {
+  describe('OnInit', () => {
     it('should emit api response into paragraph subject', () => {
       component.ngOnInit();
 
