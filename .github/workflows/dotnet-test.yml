@@ -2,7 +2,7 @@ name: CI API
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev, staging]
     paths:
      - 'api/**'
   pull_request:
