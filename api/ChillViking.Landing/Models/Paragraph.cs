@@ -1,5 +1,5 @@
 ﻿namespace ChillViking.Landing.Models;
 
 public record Paragraph(
-    string Contents,
+    string Content,
     string Class = "content");

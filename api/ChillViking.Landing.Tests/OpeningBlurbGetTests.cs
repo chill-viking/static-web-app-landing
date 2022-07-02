@@ -49,6 +49,6 @@ public class OpeningBlurbGetTests
         var result = (OkObjectResult) response;
         Assert.That(result.Value, Is.TypeOf<Response<Paragraph[]>>());
         var paragraphs = ((Response<Paragraph[]>) result.Value).Data;
-        Assert.That(paragraphs.First().Contents, Contains.Substring("Testing"));
+        Assert.That(paragraphs.First().Content, Contains.Substring("Testing"));
     }
 }
