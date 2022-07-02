@@ -22,8 +22,8 @@ jobs:
         run: dotnet restore
       - name: Test with dotnet
         run: dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --results-directory "./coverage"
-      - name: Generate coverage report
-        if: ${{ always() }}
-        uses: romeovs/lcov-reporter-action@v0.2.16
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
         with:
-          lcov-file: ./coverage/**/coverage.info
+          flags: api
+          verbose: true
