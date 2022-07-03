@@ -8,6 +8,4 @@ import { Injectable } from '@angular/core';
 })
 export class AppConfigService {
   appInsightsConnectionString = environment.appInsightsConnectionString;
-
-  constructor() { }
 }

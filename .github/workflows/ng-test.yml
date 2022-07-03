@@ -7,7 +7,7 @@ on:
     paths:
      - 'ng-landing/**'
   pull_request:
-    branches: [main]
+    types: [opened, synchronize, reopened]
     paths:
      - 'ng-landing/**'
 
@@ -21,12 +21,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Run Karma tests
+        with:
+          fetch-depth: 0
+      - name: Run lint and tests
         run: |
           npm i
           npm run pr-ci
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
         if: always()
-        with:
-          flags: frontend,${GITHUB_REF##*/}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_NG }}

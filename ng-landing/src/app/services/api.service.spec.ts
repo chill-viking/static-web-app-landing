@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { PageContents } from '../models';
 import { ApiService } from './api.service';
+import { MonitoringService } from './monitoring.service';
 
 describe('ApiService', () => {
   let service: ApiService;
@@ -14,6 +15,7 @@ describe('ApiService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: HttpClient, useValue: httpSpy },
+        { provide: MonitoringService, useValue: jasmine.createSpyObj<MonitoringService>('Logger', ['logException']) },
       ]
     });
     service = TestBed.inject(ApiService);

@@ -7,7 +7,7 @@ import { AppConfigService } from './app-config.service';
   providedIn: 'root'
 })
 export class MonitoringService {
-  private _appInsights?: ApplicationInsights;
+  protected _appInsights?: ApplicationInsights;
 
   constructor(
     appConfig: AppConfigService,
