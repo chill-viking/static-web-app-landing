@@ -6,6 +6,7 @@ import {
   RouterTestingModule,
 } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { PageContents } from './models';
 import { ApiService } from './services';
 
 describe('AppComponent', () => {
@@ -14,7 +15,7 @@ describe('AppComponent', () => {
   let apiSpy: jasmine.SpyObj<ApiService>;
 
   beforeEach(waitForAsync(() => {
-    apiSpy = jasmine.createSpyObj<ApiService>('ApiService', ['getOpeningBlurb']);
+    apiSpy = jasmine.createSpyObj<ApiService>('ApiService', ['getPageContents']);
 
     TestBed.configureTestingModule({
       imports: [
@@ -30,7 +31,14 @@ describe('AppComponent', () => {
   }));
 
   beforeEach(() => {
-    apiSpy.getOpeningBlurb.and.returnValue(cold('-a|', { a: [{ content: 'hi', class: '' }]}));
+    const pageContents: PageContents = {
+      title: '',
+      divisions: [{
+        class: 'something',
+        content: [{ type: 'paragraph', content: 'hi', class: '' }],
+      }],
+    };
+    apiSpy.getPageContents.and.returnValue(cold('-a|', { a: pageContents }));
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
   });
@@ -53,8 +61,8 @@ describe('AppComponent', () => {
     it('should emit api response into paragraph subject', () => {
       component.ngOnInit();
 
-      expect(apiSpy.getOpeningBlurb).toHaveBeenCalled();
-      const expected$ = cold('ab', { a: [], b: [{ content: 'hi', class: '' }]});
+      expect(apiSpy.getPageContents).toHaveBeenCalledWith('home');
+      const expected$ = cold('ab', { a: [], b: [{ type: 'paragraph', content: 'hi', class: '' }]});
       expect(component.paragraphs$).toBeObservable(expected$);
     });
   });

@@ -20,4 +20,7 @@
           <CopyToPublishDirectory>Never</CopyToPublishDirectory>
         </None>
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\ChillViking.Data\ChillViking.Data.csproj" />
+    </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 import { hot } from 'jasmine-marbles';
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { Paragraph } from '../models';
+import { PageContents } from '../models';
 import { ApiService } from './api.service';
 
 describe('ApiService', () => {
@@ -23,27 +23,44 @@ describe('ApiService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('getOpeningBlurb', () => {
+  describe('getPageContents', () => {
     it('should return http response', () => {
-      var httpResponse$ = hot('-0|', [{ data: [{ content: 'hello', class: 'world' }] }]);
+      const pageContents: PageContents = {
+        title: 'Hello World',
+        divisions: [{
+          class: 'content',
+          content: [{ type: 'paragraph', content: 'hello', class: 'world' }],
+        }],
+      };
+      const httpResponse$ = hot('-0|', [{ data: pageContents }]);
       httpSpy.get.and.returnValue(httpResponse$);
 
-      var result$ = service.getOpeningBlurb();
+      const result$ = service.getPageContents('hi');
 
-      expect(httpSpy.get).toHaveBeenCalledWith('/api/opening-blurb');
-      expect(result$).toBeObservable(hot('-a|', { a: [{ content: 'hello', class: 'world' }]}));
+      expect(httpSpy.get).toHaveBeenCalledWith(
+        '/api/page-contents',
+        { params: { ['page-slug']: 'hi' } },
+      );
+      expect(result$).toBeObservable(hot('-a|', { a: pageContents }));
     });
 
     describe('when http client throws error', () => {
       it('should return response with error', () => {
         httpSpy.get.and.returnValue(hot('-#-', null, { error: 'err' }));
 
-        var result$ = service.getOpeningBlurb();
+        const result$ = service.getPageContents('page-slug');
 
-        const expected: Paragraph[] = [{
-          content: 'Failed to retrieve data',
-          class: 'error',
-        }];
+        const expected: PageContents = {
+          title: 'Chill Viking | Oops',
+          divisions: [{
+            class: 'error',
+            content: [{
+              content: 'Failed to retrieve data',
+              type: 'paragraph',
+              class: 'error',
+            }],
+          }],
+        };
         expect(result$).toBeObservable(hot('-(a|)', { a: expected }));
       });
     });

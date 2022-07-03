@@ -1,7 +1,8 @@
 import { BehaviorSubject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { Paragraph } from './models';
+import { Title } from '@angular/platform-browser';
+import { DivisionContent } from './models';
 import { ApiService } from './services';
 
 @Component({
@@ -10,20 +11,23 @@ import { ApiService } from './services';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  private _paragraphSubject$ = new BehaviorSubject<Paragraph[]>([]);
+  private _paragraphSubject$ = new BehaviorSubject<DivisionContent[]>([]);
 
   title = 'Hello world';
   paragraphs$ = this._paragraphSubject$.asObservable();
 
   constructor(
     private _api: ApiService,
+    private readonly _title: Title,
   ) { }
 
   ngOnInit(): void {
-    this._api.getOpeningBlurb().pipe(
+    this._title.setTitle('Chill Viking | Loading...');
+    this._api.getPageContents('home').pipe(
       first(),
-    ).subscribe(paragraphs => {
-      this._paragraphSubject$.next(paragraphs);
+    ).subscribe(content => {
+      this._title.setTitle(content.title);
+      this._paragraphSubject$.next(content.divisions[0].content);
     });
   }
 }
