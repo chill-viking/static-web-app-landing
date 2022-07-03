@@ -35,6 +35,8 @@ jobs:
           output_location: "dist/ng-landing" # Built app content directory - optional
           production_branch: "main"
           ###### End of Repository/Build Configurations ######
+        env:
+          AI_CONNECTION_STRING: ${{ secrets.AI_CONNECTION_STRING }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
