@@ -10,7 +10,7 @@
     "CORS": "*",
     "CORSCredentials": false
   },
-  "AzureFunctoinsJobHost": {
+  "AzureFunctionsJobHost": {
     "logging": {
       "logLevels": {
         "default": "Debug"
