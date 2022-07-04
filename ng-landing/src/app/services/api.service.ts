@@ -21,6 +21,7 @@ export class ApiService {
     return {
       title: 'Chill Viking | Oops',
       divisions: [{
+        type: 'div',
         class: 'error',
         content: [{
           content: initContent,

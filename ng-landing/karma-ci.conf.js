@@ -28,10 +28,11 @@ module.exports = function (config) {
       dir: require('path').join(__dirname, './coverage'),
       subdir: '.',
       reporters: [
-        { type: 'lcov' }
+        { type: 'lcov' },
+        { type: 'text-summary' }
       ]
     },
-    reporters: ['kjhtml'],
+    reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

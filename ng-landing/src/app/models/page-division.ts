@@ -4,6 +4,7 @@ import {
 
 export interface PageDivision {
   id?: string;
+  type: 'div' | undefined;
   class: string;
   content: DivisionContent[];
 }

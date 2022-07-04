@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { PageContents } from '../models';
 import { ApiService } from './api.service';
-import { MonitoringService } from './monitoring.service';
+import {
+  MonitoringService,
+} from './monitoring.service';
 
 describe('ApiService', () => {
   let service: ApiService;
@@ -30,6 +32,7 @@ describe('ApiService', () => {
       const pageContents: PageContents = {
         title: 'Hello World',
         divisions: [{
+          type: 'div',
           class: 'content',
           content: [{ type: 'paragraph', content: 'hello', class: 'world' }],
         }],
@@ -55,6 +58,7 @@ describe('ApiService', () => {
         const expected: PageContents = {
           title: 'Chill Viking | Oops',
           divisions: [{
+            type: 'div',
             class: 'error',
             content: [{
               content: 'Failed to retrieve data',

@@ -34,6 +34,7 @@ describe('AppComponent', () => {
     const pageContents: PageContents = {
       title: '',
       divisions: [{
+        type: 'div',
         class: 'something',
         content: [{ type: 'paragraph', content: 'hi', class: '' }],
       }],

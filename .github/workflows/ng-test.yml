@@ -30,6 +30,17 @@ jobs:
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         if: always()
+        with:
+          projectBaseDir: ng-landing
+          args: >
+            -Dsonar.organization=chill-viking-org
+            -Dsonar.projectKey=chill-viking-org_static-web-app-landing-ng-app
+            -Dsonar.sources=src
+            -Dsonar.tests=src
+            -Dsonar.test.inclusions=src/**/*.spec.ts
+            -Dsonar.coverage.exclusions=src/**/*.spec.ts
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.typescript.tsconfigPath=tsconfig.app.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_NG }}
