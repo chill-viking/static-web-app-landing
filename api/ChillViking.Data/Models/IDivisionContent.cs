@@ -10,6 +10,6 @@ public interface IPageContentMetaData
 
 public interface IDivisionContent : IPageContentMetaData
 {
-    public DivContentType ContentType { get; }
+    public DivContentType Type { get; }
     public string Content { get; }
 }
