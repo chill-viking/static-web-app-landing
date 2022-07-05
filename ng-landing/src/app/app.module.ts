@@ -9,6 +9,7 @@ import {
   AppRoutingModule,
 } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { AppComponent } from './app.component';
   ],
   declarations: [
     AppComponent,
+    PageNotFoundComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
