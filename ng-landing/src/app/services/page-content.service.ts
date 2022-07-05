@@ -1,9 +1,7 @@
-import {
-  PageContents,
-} from 'dist/chill-viking-template';
 import { Observable, of, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { PageContents } from '../models';
 import { ApiService } from './api.service';
 import {
   MonitoringService,
