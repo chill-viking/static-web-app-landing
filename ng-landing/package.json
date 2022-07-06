@@ -8,7 +8,7 @@
     "build": "npm run config && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "pr-ci": "ng lint & ng run ng-landing:test-ci",
+    "test-ci": "ng lint & ng run ng-landing:test-ci",
     "lint": "ng lint"
   },
   "private": true,

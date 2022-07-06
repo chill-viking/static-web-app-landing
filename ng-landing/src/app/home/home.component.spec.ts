@@ -2,10 +2,10 @@ import { cold, hot } from 'jasmine-marbles';
 import {
   ComponentFixture, TestBed, waitForAsync,
 } from '@angular/core/testing';
-import { loggerSpy } from '../mocks.spec';
+import { loggerSpy } from '@shared/mocks.spec';
 import {
   MonitoringService, PageContentService,
-} from '../services';
+} from '@shared/services';
 import { HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {

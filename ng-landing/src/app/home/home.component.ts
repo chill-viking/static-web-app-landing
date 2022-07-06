@@ -3,10 +3,10 @@ import {
 } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { PageContents } from '../models';
+import { PageContents } from '@shared/models';
 import {
   MonitoringService, PageContentService,
-} from '../services';
+} from '@shared/services';
 
 @Component({
   selector: 'app-home',
