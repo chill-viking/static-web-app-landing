@@ -1,9 +1,8 @@
-import { BehaviorSubject, map } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
-import { Component, OnInit } from '@angular/core';
-import { PageContents } from '@shared/models';
+
+import { Component } from '@angular/core';
+import { HasSlug } from '@shared/components';
 import {
-  MonitoringService, PageContentService,
+  MonitoringService,
 } from '@shared/services';
 
 @Component({
@@ -11,26 +10,12 @@ import {
   templateUrl: './about-us.component.html',
   styleUrls: ['./about-us.component.scss']
 })
-export class AboutUsComponent implements OnInit {
-  private _contentsSubject$ = new BehaviorSubject<PageContents | null>(null);
-  private _content$ = this._contentsSubject$.asObservable();
-
-  hasContents$ = this._content$.pipe(
-    map((content) => !!content),
-  );
-  paragraphs$ = this._content$.pipe(
-    map((content) => content?.divisions[0].content),
-  );
+export class AboutUsComponent extends HasSlug {
+  slug = 'about-us';
 
   constructor(
-    private _pageContentSvc: PageContentService,
     private _logger: MonitoringService,
-  ) { }
-
-  ngOnInit(): void {
-    this._pageContentSvc.getPageContents('about-us').pipe(
-      first(),
-      tap((contents) => this._contentsSubject$.next(contents)),
-    ).subscribe();
+  ) {
+    super();
   }
 }
