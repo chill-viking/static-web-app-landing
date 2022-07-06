@@ -1,5 +1,5 @@
 <div class="contents">
-  <p *ngFor="let paragraph of paragraphs$ | async as list">
+  <p *ngFor="let paragraph of paragraphs$ | async as list" class="{{ paragraph.class }}">
     {{ paragraph.content }}
   </p>
 </div>
