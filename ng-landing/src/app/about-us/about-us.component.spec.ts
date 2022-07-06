@@ -1,10 +1,13 @@
-import { cold, hot } from 'jasmine-marbles';
+import { MockComponent } from 'ng-mocks';
 import {
   ComponentFixture, TestBed, waitForAsync,
 } from '@angular/core/testing';
+import {
+  PageContentsComponent,
+} from '@shared/components';
 import { loggerSpy } from '@shared/mocks.spec';
 import {
-  MonitoringService, PageContentService,
+  MonitoringService,
 } from '@shared/services';
 import {
   AboutUsComponent,
@@ -13,31 +16,14 @@ import {
 describe('AboutUsComponent', () => {
   let component: AboutUsComponent;
   let fixture: ComponentFixture<AboutUsComponent>;
-  let pageContentsSpy: jasmine.SpyObj<PageContentService>;
 
   beforeEach(waitForAsync(() => {
-    pageContentsSpy = jasmine.createSpyObj<PageContentService>('PageContentService', ['getPageContents']);
-    pageContentsSpy.getPageContents.and.returnValue(cold('-0-', [
-      {
-        title: '',
-        divisions: [
-          {
-            class: '',
-            type: 'div',
-            content: [{
-              class: 'hello',
-              type: 'paragraph',
-              content: 'content',
-            }],
-          }
-        ],
-      },
-    ]));
-
     TestBed.configureTestingModule({
-      declarations: [ AboutUsComponent ],
+      declarations: [
+        AboutUsComponent,
+        MockComponent(PageContentsComponent),
+      ],
       providers: [
-        { provide: PageContentService, useValue: pageContentsSpy },
         { provide: MonitoringService, useValue: loggerSpy },
       ],
     }).compileComponents();
@@ -49,11 +35,6 @@ describe('AboutUsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should emit contents from page contents service', () => {
-    expect(component.hasContents$).toBeObservable(hot('01', [false, true]));
-    expect(component.paragraphs$).toBeObservable(hot('-0', [[{ class: 'hello', type: 'paragraph', content: 'content' }]]));
-    expect(pageContentsSpy.getPageContents).toHaveBeenCalledWith('about-us');
+    expect(component.slug).toEqual('about-us');
   });
 });
