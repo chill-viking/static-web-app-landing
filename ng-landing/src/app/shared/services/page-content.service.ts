@@ -1,4 +1,6 @@
-import { Observable, of, tap } from 'rxjs';
+import {
+  Observable, of, Subject, tap,
+} from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { PageContents } from '../models';
@@ -11,7 +13,10 @@ import {
   providedIn: 'root'
 })
 export class PageContentService {
+  private _pageContentsSubject$ = new Subject<PageContents>();
   protected _cache: { [slug: string]: PageContents } = {};
+
+  currentPageContents$ = this._pageContentsSubject$.asObservable();
 
   constructor(
     private _api: ApiService,
@@ -19,17 +24,24 @@ export class PageContentService {
     private _logger: MonitoringService,
   ) { }
 
-  getPageContents(slug: string): Observable<PageContents> {
+  private fetchPageContents(slug: string) {
     if (!!this._cache[slug]) {
       const result = { ...this._cache[slug] };
-      this._title.setTitle(result.title);
       return of(result);
     }
 
     return this._api.getPageContents(slug).pipe(
       tap(contents => {
-        this._title.setTitle(contents.title);
         this._cache[slug] = contents;
+      }),
+    );
+  }
+
+  getPageContents(slug: string): Observable<PageContents> {
+    return this.fetchPageContents(slug).pipe(
+      tap(contents => {
+        this._title.setTitle(contents.title);
+        this._pageContentsSubject$.next(contents);
       }),
     );
   }
