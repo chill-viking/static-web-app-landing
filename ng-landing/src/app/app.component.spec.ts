@@ -1,10 +1,11 @@
+import { MockComponent } from 'ng-mocks';
 import {
   ComponentFixture, TestBed, waitForAsync,
 } from '@angular/core/testing';
-import {
-  RouterTestingModule,
-} from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import {
+  PrimaryNavigationComponent,
+} from './primary-navigation/primary-navigation.component';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -12,11 +13,10 @@ describe('AppComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-      ],
+      imports: [],
       declarations: [
         AppComponent,
+        MockComponent(PrimaryNavigationComponent),
       ],
       providers: [],
     }).compileComponents();
