@@ -38,6 +38,12 @@ public class PageContentsRepository : IPageContentsRepository
             },
             new Paragraph
             {
+                Id = "temp-p",
+                Content = $"Showing {pageSlug}.",
+                Class = "basic",
+            },
+            new Paragraph
+            {
                 Id = "p-2",
                 Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porttitor leo enim. Etiam blandit elit et eros varius, vitae mattis tellus feugiat. Sed at dui sem. Proin vulputate velit eget gravida lobortis. Mauris vitae neque at purus ultrices porta eget et ante. Cras elementum, lorem viverra fermentum posuere, sem ipsum facilisis magna, sit amet mollis odio ex sed sem. Praesent porttitor augue quis enim egestas, vitae rutrum lorem vehicula.",
             },
