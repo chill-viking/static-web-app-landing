@@ -1,4 +1,5 @@
 ﻿using ChillViking.Data.Models;
+using ChillViking.Data.Services;
 using Microsoft.Extensions.Logging;
 
 namespace ChillViking.Data.Repositories;
@@ -10,11 +11,14 @@ public interface IPageContentsRepository
 
 public class PageContentsRepository : IPageContentsRepository
 {
+    private readonly IEnvironmentContext _environment;
     private readonly ILogger<PageContentsRepository> _logger;
 
     public PageContentsRepository(
+        IEnvironmentContext environment,
         ILogger<PageContentsRepository> logger)
     {
+        _environment = environment;
         _logger = logger;
     }
 
@@ -22,7 +26,8 @@ public class PageContentsRepository : IPageContentsRepository
         string pageSlug,
         CancellationToken cancellationToken = default)
     {
-        var environment = Environment.GetEnvironmentVariable("CurrentEnvironment");
+        _logger.LogDebug("Getting PageContents, {PageSlug}", pageSlug);
+        var environment = _environment.CurrentEnvironment;
         var paragraphs = new[]
         {
             new Paragraph
