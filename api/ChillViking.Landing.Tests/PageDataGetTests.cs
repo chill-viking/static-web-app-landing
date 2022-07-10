@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace ChillViking.Landing.Tests;
 
-public class PageDataGetTests : FunctionTests
+public class PageDataGetTests : FunctionTests<PageContentsGet>
 {
     private Mock<IPageContentsRepository> _pageDataRepositoryMock = null!;
 
@@ -47,7 +47,7 @@ public class PageDataGetTests : FunctionTests
         _pageDataRepositoryMock
             .Setup(m => m.GetPageContentsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(repoResponse);
-        
+
         var response = await _function.RunAsync(
             HttpRequestSetup(query, string.Empty),
             ct);
@@ -62,7 +62,6 @@ public class PageDataGetTests : FunctionTests
     [Test]
     public async Task RunAsync_NoQuery_UsesHome()
     {
-        
         var ct = CancellationToken.None;
         var query = new Dictionary<string, StringValues>();
         var repoResponse = new PageContents
@@ -73,8 +72,8 @@ public class PageDataGetTests : FunctionTests
         _pageDataRepositoryMock
             .Setup(m => m.GetPageContentsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(repoResponse);
-        
-        var response = await _function.RunAsync(
+
+        await _function.RunAsync(
             HttpRequestSetup(query, string.Empty),
             ct);
 
