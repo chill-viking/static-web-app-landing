@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { first, Observable } from 'rxjs';
 import {
   distinctUntilChanged, map, shareReplay,
   startWith,
@@ -8,7 +8,7 @@ import {
 } from '@angular/cdk/layout';
 import {
   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component,
+  Component, OnInit,
 } from '@angular/core';
 import {
   OnPushComponent,
@@ -23,7 +23,7 @@ import {
   styleUrls: ['./primary-navigation.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PrimaryNavigationComponent extends OnPushComponent {
+export class PrimaryNavigationComponent extends OnPushComponent implements OnInit {
   isHandset$: Observable<boolean> = this._breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(result => result.matches),
     shareReplay()
@@ -34,6 +34,8 @@ export class PrimaryNavigationComponent extends OnPushComponent {
     map(contents => contents?.title ?? 'ChillViking | ...'),
     distinctUntilChanged(),
   );
+
+  menu$ = this._pageContents.menu$;
 
   constructor(
     private _breakpointObserver: BreakpointObserver,
@@ -48,6 +50,14 @@ export class PrimaryNavigationComponent extends OnPushComponent {
     return [
       this.pageTitle$,
       this.isHandset$,
+      this.menu$,
     ];
+  }
+
+  override ngOnInit(): void {
+      super.ngOnInit();
+      this._pageContents.getNavigationMenu().pipe(
+        first(),
+      ).subscribe();
   }
 }

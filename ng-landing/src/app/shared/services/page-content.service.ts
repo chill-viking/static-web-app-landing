@@ -1,9 +1,12 @@
 import {
-  Observable, of, Subject, tap,
+  BehaviorSubject, Observable, of, shareReplay,
+  Subject, tap,
 } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { PageContents } from '../models';
+import {
+  NavigationMenu, PageContents,
+} from '../models';
 import { ApiService } from './api.service';
 import { LoggerService } from './logger.service';
 
@@ -12,9 +15,14 @@ import { LoggerService } from './logger.service';
 })
 export class PageContentService {
   private _pageContentsSubject$ = new Subject<PageContents>();
+  private _navigationMenuSubject$ = new BehaviorSubject<NavigationMenu | null>(null);
+
   protected _cache: { [slug: string]: PageContents } = {};
 
   currentPageContents$ = this._pageContentsSubject$.asObservable();
+  menu$ = this._navigationMenuSubject$.asObservable().pipe(
+    shareReplay(1),
+  );
 
   constructor(
     private _api: ApiService,
@@ -41,6 +49,13 @@ export class PageContentService {
         this._title.setTitle(contents.title);
         this._pageContentsSubject$.next(contents);
       }),
+    );
+  }
+
+  getNavigationMenu(): Observable<NavigationMenu> {
+    return this._api.getNavigationMenu().pipe(
+      tap((menu) => this._navigationMenuSubject$.next(menu)),
+      shareReplay(1),
     );
   }
 }
