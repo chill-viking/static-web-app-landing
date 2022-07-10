@@ -3,7 +3,9 @@ import {
 } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PageContents, Result } from '../models';
+import {
+  NavigationMenu, PageContents, Result,
+} from '../models';
 import { LoggerService } from './logger.service';
 
 @Injectable({
@@ -41,6 +43,16 @@ export class ApiService {
       catchError(error => {
         this._logger.logException(error, 1);
         return of({ data: this.createDefault('Failed to retrieve data') });
+      }),
+      map((result) => result.data),
+    );
+  }
+
+  getNavigationMenu(): Observable<NavigationMenu> {
+    return this._http.get<Result<NavigationMenu>>('/api/navigation-menu').pipe(
+      catchError(error => {
+        this._logger.logException(error, 1);
+        return of({ data: {} as NavigationMenu });
       }),
       map((result) => result.data),
     );

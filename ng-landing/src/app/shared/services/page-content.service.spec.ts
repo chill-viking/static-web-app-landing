@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
 import { loggerSpy } from '../mocks.spec';
-import { PageContents } from '../models';
+import {
+  NavigationMenu, PageContents,
+} from '../models';
 import { ApiService } from './api.service';
 import { LoggerService } from './logger.service';
 import {
@@ -28,7 +30,10 @@ describe('PageContentService', () => {
   let titleSpy: jasmine.SpyObj<Title>;
 
   beforeEach(() => {
-    apiSpy = jasmine.createSpyObj<ApiService>('ApiService', ['getPageContents']);
+    apiSpy = jasmine.createSpyObj<ApiService>('ApiService', [
+      'getPageContents',
+      'getNavigationMenu',
+    ]);
     titleSpy = jasmine.createSpyObj<Title>('Title', ['setTitle']);
 
     TestBed.configureTestingModule({
@@ -79,6 +84,21 @@ describe('PageContentService', () => {
         expect(apiSpy.getPageContents).not.toHaveBeenCalled();
         expect(titleSpy.setTitle).toHaveBeenCalledWith('G thang');
       });
+    });
+  });
+
+  describe('getNavigationMenu', () => {
+    it('should return result from api service', () => {
+      const navMenu: NavigationMenu = {
+        items: [],
+        currentEnvironment: 'testing',
+      };
+      apiSpy.getNavigationMenu.and.returnValue(cold('-0-', [navMenu]));
+
+      const result$ = service.getNavigationMenu();
+
+      expect(result$).toBeObservable(cold('-0-', [navMenu]));
+      expect(apiSpy.getNavigationMenu).toHaveBeenCalled();
     });
   });
 });

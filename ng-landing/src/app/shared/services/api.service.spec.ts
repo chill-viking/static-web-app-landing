@@ -1,8 +1,11 @@
 import { hot } from 'jasmine-marbles';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { loggerSpy } from '../mocks.spec';
-import { PageContents } from '../models';
+import {
+  NavigationMenu, PageContents,
+} from '../models';
 import { ApiService } from './api.service';
 import { LoggerService } from './logger.service';
 
@@ -26,48 +29,91 @@ describe('ApiService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('getPageContents', () => {
-    it('should return http response', () => {
-      const pageContents: PageContents = {
-        title: 'Hello World',
-        divisions: [{
-          type: 'div',
-          class: 'content',
-          content: [{ type: 'paragraph', content: 'hello', class: 'world' }],
-        }],
-      };
-      const httpResponse$ = hot('-0|', [{ data: pageContents }]);
-      httpSpy.get.and.returnValue(httpResponse$);
+  const getEndpointTheory = <T>(
+    endpointName: string,
+    serviceFunc: (service: ApiService) => Observable<T>,
+    url: string,
+    apiResponse: T,
+    urlOptions?: any,
+    defaultedResponse?: T,
+  ) => {
+    describe(endpointName, () => {
+      it('should return data from http response', () => {
+        const httpResponse$ = hot('-0|', [{ data: apiResponse }]);
+        httpSpy.get.and.returnValue(httpResponse$);
 
-      const result$ = service.getPageContents('hi');
+        const result$ = serviceFunc(service);
 
-      expect(httpSpy.get).toHaveBeenCalledWith(
-        '/api/page-contents',
-        { params: { ['page-slug']: 'hi' } },
-      );
-      expect(result$).toBeObservable(hot('-a|', { a: pageContents }));
-    });
+        if (!!urlOptions) {
+          expect(httpSpy.get).toHaveBeenCalledWith(url, urlOptions);
+        } else {
+          expect(httpSpy.get).toHaveBeenCalledWith(url);
+        }
 
-    describe('when http client throws error', () => {
-      it('should return response with error', () => {
-        httpSpy.get.and.returnValue(hot('-#-', null, { error: 'err' }));
+        expect(result$).toBeObservable(hot('-0|', [apiResponse]));
+      });
 
-        const result$ = service.getPageContents('page-slug');
-
-        const expected: PageContents = {
-          title: 'Chill Viking | Oops',
-          divisions: [{
-            type: 'div',
-            class: 'error',
-            content: [{
-              content: 'Failed to retrieve data',
-              type: 'paragraph',
-              class: 'error',
-            }],
-          }],
-        };
-        expect(result$).toBeObservable(hot('-(a|)', { a: expected }));
+      describe('when http client throws error', () => {
+        if (!!defaultedResponse) {
+          it('should return defaulted response', () => {
+            httpSpy.get.and.returnValue(hot('-#-', null, { error: 'err' }));
+    
+            const result$ = serviceFunc(service);
+    
+            expect(result$).toBeObservable(hot('-(0|)', [defaultedResponse]));
+          });
+        } else {
+          it('should return empty object', () => {
+            httpSpy.get.and.returnValue(hot('-#-', null, { error: 'err' }));
+    
+            const result$ = serviceFunc(service);
+    
+            expect(result$).toBeObservable(hot('-(0|)', [{}]));
+          });
+        }
       });
     });
-  });
+  };
+
+  getEndpointTheory<PageContents>(
+    'getPageContents',
+    (service) => service.getPageContents('page-slug'),
+    '/api/page-contents',
+    {
+      title: 'Hello World',
+      divisions: [{
+        type: 'div',
+        class: 'content',
+        content: [{ type: 'paragraph', content: 'hello', class: 'world' }],
+      }],
+    },
+    { params: { ['page-slug']: 'page-slug' } },
+    {
+      title: 'Chill Viking | Oops',
+      divisions: [{
+        type: 'div',
+        class: 'error',
+        content: [{
+          content: 'Failed to retrieve data',
+          type: 'paragraph',
+          class: 'error',
+        }],
+      }],
+    },
+  );
+
+  getEndpointTheory<NavigationMenu>(
+    'getNavigationMenu',
+    (service) => service.getNavigationMenu(),
+    '/api/navigation-menu',
+    {
+      currentEnvironment: 'testing',
+      items: [{
+        id: 'id',
+        route: '/home',
+        title: 'Home',
+        type: 'routerLink',
+      }],
+    },
+  );
 });

@@ -1,5 +1,4 @@
 import { cold } from 'jasmine-marbles';
-import { Observable } from 'rxjs';
 import {
   LayoutModule,
 } from '@angular/cdk/layout';
@@ -29,10 +28,13 @@ import {
   RouterTestingModule,
 } from '@angular/router/testing';
 import { loggerSpy } from '@shared/mocks.spec';
-import { PageContents } from '@shared/models';
+import { NavigationMenu } from '@shared/models';
 import {
   LoggerService, PageContentService,
 } from '@shared/services';
+import {
+  spyPropertyGetter,
+} from '@shared/utils.spec';
 import {
   PrimaryNavigationComponent,
 } from './primary-navigation.component';
@@ -42,13 +44,31 @@ describe('PrimaryNavigationComponent', () => {
   let fixture: ComponentFixture<PrimaryNavigationComponent>;
   let pageContentsSpy: jasmine.SpyObj<PageContentService>;
   let changeDetectorSpy: jasmine.SpyObj<ChangeDetectorRef>;
+  let navigationMenu: NavigationMenu;
 
   beforeEach(waitForAsync(() => {
-    pageContentsSpy = jasmine.createSpyObj<PageContentService>('PageContentService', [], ['currentPageContents$']);
-    (Object.getOwnPropertyDescriptor(
-      pageContentsSpy,
-      'currentPageContents$',
-    )?.get as jasmine.Spy<() => Observable<PageContents>>).and.returnValue(cold('-0-', [null]));
+    pageContentsSpy = jasmine.createSpyObj<PageContentService>(
+      'PageContentService',
+      ['getNavigationMenu'],
+      [
+        'currentPageContents$',
+        'menu$',
+      ],
+    );
+    navigationMenu = {
+      currentEnvironment: 'testing',
+      items: [{
+        id: 'nav-1',
+        route: '/nav-1',
+        title: 'Nav',
+        type: 'routerLink',
+      }],
+    };
+    spyPropertyGetter(pageContentsSpy, 'currentPageContents$').and.returnValue(cold('-0-', [null]));
+    spyPropertyGetter(pageContentsSpy, 'menu$').and.returnValue(cold('-0-', [navigationMenu]));
+
+    pageContentsSpy.getNavigationMenu.and.returnValues(cold('-0-', [navigationMenu]));
+
     changeDetectorSpy = jasmine.createSpyObj<ChangeDetectorRef>('ChangeDetectorRef', ['detectChanges']);
 
     TestBed.configureTestingModule({
@@ -79,6 +99,7 @@ describe('PrimaryNavigationComponent', () => {
 
   it('should compile', () => {
     expect(component).toBeTruthy();
-    expect(component.pageTitle$).toBeObservable(cold('0-', ['ChillViking | ...']))
+    expect(component.pageTitle$).toBeObservable(cold('0-', ['ChillViking | ...']));
+    expect(pageContentsSpy.getNavigationMenu).toHaveBeenCalled();
   });
 });
