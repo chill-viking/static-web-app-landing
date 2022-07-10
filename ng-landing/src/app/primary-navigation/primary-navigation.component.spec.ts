@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import {
   LayoutModule,
 } from '@angular/cdk/layout';
+import { ChangeDetectorRef } from '@angular/core';
 import {
   ComponentFixture, TestBed, waitForAsync,
 } from '@angular/core/testing';
@@ -27,9 +28,10 @@ import {
 import {
   RouterTestingModule,
 } from '@angular/router/testing';
+import { loggerSpy } from '@shared/mocks.spec';
 import { PageContents } from '@shared/models';
 import {
-  PageContentService,
+  LoggerService, PageContentService,
 } from '@shared/services';
 import {
   PrimaryNavigationComponent,
@@ -39,6 +41,7 @@ describe('PrimaryNavigationComponent', () => {
   let component: PrimaryNavigationComponent;
   let fixture: ComponentFixture<PrimaryNavigationComponent>;
   let pageContentsSpy: jasmine.SpyObj<PageContentService>;
+  let changeDetectorSpy: jasmine.SpyObj<ChangeDetectorRef>;
 
   beforeEach(waitForAsync(() => {
     pageContentsSpy = jasmine.createSpyObj<PageContentService>('PageContentService', [], ['currentPageContents$']);
@@ -46,6 +49,7 @@ describe('PrimaryNavigationComponent', () => {
       pageContentsSpy,
       'currentPageContents$',
     )?.get as jasmine.Spy<() => Observable<PageContents>>).and.returnValue(cold('-0-', [null]));
+    changeDetectorSpy = jasmine.createSpyObj<ChangeDetectorRef>('ChangeDetectorRef', ['detectChanges']);
 
     TestBed.configureTestingModule({
       declarations: [PrimaryNavigationComponent],
@@ -61,6 +65,8 @@ describe('PrimaryNavigationComponent', () => {
       ],
       providers: [
         { provide: PageContentService, useValue: pageContentsSpy },
+        { provide: ChangeDetectorRef, useValue: changeDetectorSpy },
+        { provide: LoggerService, useValue: loggerSpy },
       ],
     }).compileComponents();
   }));

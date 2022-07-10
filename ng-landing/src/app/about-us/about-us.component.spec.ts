@@ -6,9 +6,7 @@ import {
   PageContentsComponent,
 } from '@shared/components';
 import { loggerSpy } from '@shared/mocks.spec';
-import {
-  MonitoringService,
-} from '@shared/services';
+import { LoggerService } from '@shared/services';
 import {
   AboutUsComponent,
 } from './about-us.component';
@@ -24,7 +22,7 @@ describe('AboutUsComponent', () => {
         MockComponent(PageContentsComponent),
       ],
       providers: [
-        { provide: MonitoringService, useValue: loggerSpy },
+        { provide: LoggerService, useValue: loggerSpy },
       ],
     }).compileComponents();
 
