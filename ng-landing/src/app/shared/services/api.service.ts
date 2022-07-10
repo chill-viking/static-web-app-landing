@@ -4,9 +4,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PageContents, Result } from '../models';
-import {
-  MonitoringService,
-} from './monitoring.service';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +12,7 @@ import {
 export class ApiService {
   constructor(
     private _http: HttpClient,
-    private _logger: MonitoringService,
+    private _logger: LoggerService,
   ) { }
 
   private createDefault(initContent: string): PageContents {

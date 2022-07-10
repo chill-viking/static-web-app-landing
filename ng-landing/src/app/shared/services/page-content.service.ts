@@ -5,9 +5,7 @@ import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { PageContents } from '../models';
 import { ApiService } from './api.service';
-import {
-  MonitoringService,
-} from './monitoring.service';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +19,7 @@ export class PageContentService {
   constructor(
     private _api: ApiService,
     private _title: Title,
-    private _logger: MonitoringService,
+    private _logger: LoggerService,
   ) { }
 
   private fetchPageContents(slug: string) {

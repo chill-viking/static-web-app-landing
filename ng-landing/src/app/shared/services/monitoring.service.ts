@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
-import { ApplicationInsights, DistributedTracingModes } from '@microsoft/applicationinsights-web';
+import {
+  ApplicationInsights, DistributedTracingModes,
+} from '@microsoft/applicationinsights-web';
+import {
+  AppConfigService,
+} from './app-config.service';
+import { LoggerService } from './logger.service';
 
-import { AppConfigService } from './app-config.service';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class MonitoringService {
+@Injectable()
+export class MonitoringService extends LoggerService {
   protected _appInsights?: ApplicationInsights;
 
   constructor(
     appConfig: AppConfigService,
   ) {
+    super();
+
     const conn = appConfig.appInsightsConnectionString;
     if (!conn) {
       console.warn('Application Insights Connection string not found.');

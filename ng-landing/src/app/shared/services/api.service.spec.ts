@@ -4,9 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { loggerSpy } from '../mocks.spec';
 import { PageContents } from '../models';
 import { ApiService } from './api.service';
-import {
-  MonitoringService,
-} from './monitoring.service';
+import { LoggerService } from './logger.service';
 
 describe('ApiService', () => {
   let service: ApiService;
@@ -18,7 +16,7 @@ describe('ApiService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: HttpClient, useValue: httpSpy },
-        { provide: MonitoringService, useValue: loggerSpy },
+        { provide: LoggerService, useValue: loggerSpy },
       ]
     });
     service = TestBed.inject(ApiService);

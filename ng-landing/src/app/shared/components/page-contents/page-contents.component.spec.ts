@@ -4,7 +4,7 @@ import {
 } from '@angular/core/testing';
 import { loggerSpy } from '@shared/mocks.spec';
 import {
-  MonitoringService, PageContentService,
+  LoggerService, PageContentService,
 } from '@shared/services';
 import {
   PageContentsComponent,
@@ -38,7 +38,7 @@ describe('PageContentsComponent', () => {
       declarations: [ PageContentsComponent ],
       providers: [
         { provide: PageContentService, useValue: pageContentsSpy },
-        { provide: MonitoringService, useValue: loggerSpy },
+        { provide: LoggerService, useValue: loggerSpy },
       ],
     }).compileComponents();
 

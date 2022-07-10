@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { SelectControlValueAccessor } from '@angular/forms';
-import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import {
+  ApplicationInsights,
+} from '@microsoft/applicationinsights-web';
 import {
   MonitoringService,
 } from './monitoring.service';

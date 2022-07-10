@@ -5,9 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { loggerSpy } from '../mocks.spec';
 import { PageContents } from '../models';
 import { ApiService } from './api.service';
-import {
-  MonitoringService,
-} from './monitoring.service';
+import { LoggerService } from './logger.service';
 import {
   PageContentService,
 } from './page-content.service';
@@ -38,7 +36,7 @@ describe('PageContentService', () => {
         ExposedPageContentService,
         { provide: ApiService, useValue: apiSpy },
         { provide: Title, useValue: titleSpy },
-        { provide: MonitoringService, useValue: loggerSpy },
+        { provide: LoggerService, useValue: loggerSpy },
       ],
     });
 

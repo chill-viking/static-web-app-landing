@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  MonitoringService,
-} from '@shared/services';
+import { LoggerService } from '@shared/services';
 
 @Component({
   templateUrl: './page-not-found.component.html',
@@ -10,7 +8,7 @@ import {
 })
 export class PageNotFoundComponent implements OnInit {
   constructor(
-    private _logger: MonitoringService,
+    private _logger: LoggerService,
     private _router: Router,
   ) { }
 
