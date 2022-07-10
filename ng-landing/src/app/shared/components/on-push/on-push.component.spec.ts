@@ -1,4 +1,7 @@
-import { Observable, ReplaySubject } from 'rxjs';
+import {
+  debounceTime, first, Observable, ReplaySubject,
+  tap,
+} from 'rxjs';
 import {
   ChangeDetectorRef, Component,
 } from '@angular/core';
@@ -54,14 +57,22 @@ describe('OnPushComponent', () => {
   });
 
   describe('observable(s) emit', () => {
-    it('should call detectChanges', () => {
+    it('should call detectChanges', (done) => {
       fixture.detectChanges();
       const changeDetector = fixture.debugElement.injector.get(ChangeDetectorRef);
       const detectChangesSpy = spyOn(changeDetector.constructor.prototype, 'detectChanges');
 
-      component.subject$.next('value');
+      component.subject$.pipe(
+        debounceTime(110),
+        first(),
+        tap((v) => {
+          expect(v).toEqual('value'); // confirm seeing expected emit.
+          expect(detectChangesSpy).toHaveBeenCalled();
+          done();
+        }),
+      ).subscribe();
 
-      expect(detectChangesSpy).toHaveBeenCalled();
+      component.subject$.next('value');
     });
   });
 

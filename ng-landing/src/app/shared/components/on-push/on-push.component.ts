@@ -1,5 +1,6 @@
 import {
-  combineLatest, Observable, Subscription, tap,
+  combineLatest, debounceTime, Observable,
+  Subscription, tap,
 } from 'rxjs';
 import {
   ChangeDetectionStrategy, ChangeDetectorRef,
@@ -24,6 +25,7 @@ export abstract class OnPushComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this._subs.push(
       combineLatest(this.getChanges()).pipe(
+        debounceTime(100),
         tap(() => this._change.detectChanges()),
       ).subscribe(),
     );
