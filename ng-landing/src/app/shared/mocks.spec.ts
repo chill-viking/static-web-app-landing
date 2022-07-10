@@ -1,6 +1,6 @@
-import { MonitoringService } from './services';
+import { LoggerService } from './services';
 
-export const loggerSpy = jasmine.createSpyObj<MonitoringService>('MonitoringService', [
+export const loggerSpy = jasmine.createSpyObj<LoggerService>('MonitoringService', [
   'logEvent',
   'logException',
   'logMetric',

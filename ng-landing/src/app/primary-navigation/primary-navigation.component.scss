@@ -1,5 +1,6 @@
 .sidenav-container {
   height: 100%;
+  min-height: 100vh;
 }
 
 .sidenav {
@@ -16,7 +17,10 @@
   z-index: 1;
 }
 
+.active {
+  font-weight: bold;
+}
+
 .body {
-  min-height: 100vh;
   padding: 10px 15px;
 }

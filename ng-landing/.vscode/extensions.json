@@ -3,6 +3,6 @@
   "recommendations": [
     "angular.ng-template",
     "mike-co.import-sorter",
-    "johnpapa.peacock",
+    "johnpapa.vscode-peacock",
   ]
 }

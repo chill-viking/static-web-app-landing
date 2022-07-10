@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { PageContents } from '@shared/models';
 import {
-  MonitoringService, PageContentService,
+  LoggerService, PageContentService,
 } from '@shared/services';
 
 @Component({
@@ -29,7 +29,7 @@ export class PageContentsComponent implements OnInit {
 
   constructor(
     private _pageContentSvc: PageContentService,
-    private _logger: MonitoringService,
+    private _logger: LoggerService,
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +42,7 @@ export class PageContentsComponent implements OnInit {
     }
     this._pageContentSvc.getPageContents(this.pageSlug).pipe(
       first(),
+      tap((contents) => this._logger.logEvent('page contents received', { contents })),
       tap((contents) => this._contentsSubject$.next(contents)),
     ).subscribe();
   }
