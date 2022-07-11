@@ -18,4 +18,12 @@ export class DebugMonitoringService extends LoggerService {
   logTrace(message: string, properties?: { [key: string]: any; } | undefined): void {
     console.trace(`Trace: ${message}`, { properties });
   }
+  logDebug(opts: { className?: string | undefined; funcOrPropName?: string | undefined; message?: string | undefined; properties?: { [key: string]: any; } | undefined; }): void {
+    const message = [
+      opts.className,
+      opts.funcOrPropName,
+      opts.message,
+    ].filter(s => !!s).join(' >> ');
+    console.debug(message, opts.properties);
+  }
 }

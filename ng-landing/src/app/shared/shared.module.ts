@@ -9,7 +9,7 @@ import {
     PageContentsComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   exports: [
     PageContentsComponent,

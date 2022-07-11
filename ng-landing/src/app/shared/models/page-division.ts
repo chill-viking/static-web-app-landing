@@ -2,9 +2,11 @@ import {
   DivisionContent,
 } from './division-content';
 
+export type DivisionType = 'div' | undefined;
+
 export interface PageDivision {
   id?: string;
-  type: 'div' | undefined;
+  type: DivisionType;
   class: string;
   content: DivisionContent[];
 }

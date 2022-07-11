@@ -67,7 +67,7 @@ describe('PrimaryNavigationComponent', () => {
     spyPropertyGetter(pageContentsSpy, 'currentPageContents$').and.returnValue(cold('-0-', [null]));
     spyPropertyGetter(pageContentsSpy, 'menu$').and.returnValue(cold('-0-', [navigationMenu]));
 
-    pageContentsSpy.getNavigationMenu.and.returnValues(cold('-0-', [navigationMenu]));
+    pageContentsSpy.publishNavigationMenu.and.returnValues(cold('-0-', [navigationMenu]));
 
     changeDetectorSpy = jasmine.createSpyObj<ChangeDetectorRef>('ChangeDetectorRef', ['detectChanges']);
 
@@ -100,6 +100,6 @@ describe('PrimaryNavigationComponent', () => {
   it('should compile', () => {
     expect(component).toBeTruthy();
     expect(component.pageTitle$).toBeObservable(cold('0-', ['ChillViking | ...']));
-    expect(pageContentsSpy.getNavigationMenu).toHaveBeenCalled();
+    expect(pageContentsSpy.publishNavigationMenu).toHaveBeenCalled();
   });
 });
