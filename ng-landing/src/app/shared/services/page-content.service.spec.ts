@@ -95,7 +95,7 @@ describe('PageContentService', () => {
       };
       apiSpy.getNavigationMenu.and.returnValue(cold('-0-', [navMenu]));
 
-      const result$ = service.getNavigationMenu();
+      const result$ = service.publishNavigationMenu();
 
       expect(result$).toBeObservable(cold('-0-', [navMenu]));
       expect(apiSpy.getNavigationMenu).toHaveBeenCalled();

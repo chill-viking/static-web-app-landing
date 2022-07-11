@@ -1,6 +1,6 @@
 import {
-  BehaviorSubject, Observable, of, shareReplay,
-  Subject, tap,
+  distinctUntilChanged, first, map, Observable,
+  of, shareReplay, startWith, Subject, tap,
 } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -11,15 +11,22 @@ import { ApiService } from './api.service';
 import { LoggerService } from './logger.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PageContentService {
   private _pageContentsSubject$ = new Subject<PageContents>();
-  private _navigationMenuSubject$ = new BehaviorSubject<NavigationMenu | null>(null);
+  private _navigationMenuSubject$ = new Subject<NavigationMenu>();
 
   protected _cache: { [slug: string]: PageContents } = {};
 
+  getPageContentsAsCallback = this.getPageContents.bind(this);
   currentPageContents$ = this._pageContentsSubject$.asObservable();
+  currentTitle$ = this.currentPageContents$.pipe(
+    map((content) => content?.title),
+    startWith('ChillViking | ...'),
+    distinctUntilChanged(),
+    tap((title) => this._title.setTitle(title)),
+  );
   menu$ = this._navigationMenuSubject$.asObservable().pipe(
     shareReplay(1),
   );
@@ -46,16 +53,15 @@ export class PageContentService {
   getPageContents(slug: string): Observable<PageContents> {
     return this.fetchPageContents(slug).pipe(
       tap(contents => {
-        this._title.setTitle(contents.title);
         this._pageContentsSubject$.next(contents);
       }),
     );
   }
 
-  getNavigationMenu(): Observable<NavigationMenu> {
-    return this._api.getNavigationMenu().pipe(
+  publishNavigationMenu(): void {
+    this._api.getNavigationMenu().pipe(
+      first(),
       tap((menu) => this._navigationMenuSubject$.next(menu)),
-      shareReplay(1),
-    );
+    ).subscribe();
   }
 }
