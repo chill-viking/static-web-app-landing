@@ -8,9 +8,11 @@ import {
 import { LoggerService } from '@shared/services';
 import {
   PageDivisionTemplateDirective,
+  PageDivisionWithTemplates,
 } from '../../abstract-directives';
 import {
   DivTemplateDirective,
+  ParagraphTemplateDirective,
 } from '../../directives';
 
 @Component({
@@ -33,6 +35,8 @@ export class PageContentContainerComponent {
 
   @Input() divTemplate: DivTemplateDirective | undefined;
 
+  @Input() paragraphTemplate: ParagraphTemplateDirective | undefined;
+
   constructor(
     private _logger: LoggerService,
   ) { }
@@ -44,9 +48,18 @@ export class PageContentContainerComponent {
       className: this._name,
       funcOrPropName: 'getTemplateRef',
       message: 'Getting template ref',
-      properties: { type, result: templateRef },
+      properties: { type, templateRef, paragraphTemplate: this.paragraphTemplate },
     });
 
     return templateRef;
+  }
+
+  getPageDivisionContext(data: PageDivision): { $implicit: PageDivisionWithTemplates } {
+    return {
+      $implicit: {
+        data,
+        templates: { ['paragraph']: this.paragraphTemplate },
+      },
+    };
   }
 }

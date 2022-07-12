@@ -1,32 +1,31 @@
 import {
-  ContentChildren, Directive, ElementRef,
-  EmbeddedViewRef, Injector, TemplateRef,
+  Directive, ElementRef, EmbeddedViewRef,
+  Injector, TemplateRef,
 } from '@angular/core';
 import {
-  DivisionType, PageDivision,
+  DivisionContent, DivisionType, PageDivision,
 } from '@shared/models';
 import { LoggerService } from '@shared/services';
-import {
-  ParagraphTemplateDirective,
-} from './paragraph-template.directive';
+
+export interface PageDivisionWithTemplates {
+  data: PageDivision;
+  templates: { [k: string]: TemplateRef<DivisionContent> | undefined };
+};
 
 @Directive()
-export abstract class PageDivisionTemplateDirective extends TemplateRef<PageDivision> {
+export abstract class PageDivisionTemplateDirective extends TemplateRef<PageDivisionWithTemplates> {
   protected abstract readonly _name: string;
   abstract type: DivisionType;
 
-  @ContentChildren(ParagraphTemplateDirective)
-  paragraphTemplate: ParagraphTemplateDirective | undefined;
-
   constructor(
-    public templateRef: TemplateRef<PageDivision>,
-    public elementRef: ElementRef<PageDivision>,
+    public templateRef: TemplateRef<PageDivisionWithTemplates>,
+    public elementRef: ElementRef<PageDivisionWithTemplates>,
     private _logger: LoggerService,
   ) {
     super();
   }
 
-  createEmbeddedView(context: PageDivision, injector?: Injector | undefined): EmbeddedViewRef<PageDivision> {
+  createEmbeddedView(context: PageDivisionWithTemplates, injector?: Injector | undefined): EmbeddedViewRef<PageDivisionWithTemplates> {
     this._logger.logDebug({
       className: this._name,
       funcOrPropName: 'createEmbeddedView',
