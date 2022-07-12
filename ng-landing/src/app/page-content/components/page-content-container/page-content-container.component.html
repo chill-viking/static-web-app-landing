@@ -1,12 +1,12 @@
 <ng-template appDivisionDiv let-content>
   <app-division-div-container
-    [division]="content"
+    [divisionWithTemplates]="content"
   ></app-division-div-container>
 </ng-template>
 
 <ng-container *ngFor="let item of divisions">
   <ng-container
     [ngTemplateOutlet]="getTemplateRef(item.type)"
-    [ngTemplateOutletContext]="{ $implicit: item }"
+    [ngTemplateOutletContext]="getPageDivisionContext(item)"
   ></ng-container>
 </ng-container>

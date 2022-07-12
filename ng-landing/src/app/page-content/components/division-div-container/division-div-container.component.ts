@@ -4,9 +4,11 @@ import {
 } from '@angular/core';
 import {
   DivisionContent, DivisionContentType,
-  PageDivision,
 } from '@shared/models';
 import { LoggerService } from '@shared/services';
+import {
+  PageDivisionWithTemplates,
+} from '../../abstract-directives';
 
 @Component({
   selector: 'app-division-div-container',
@@ -17,7 +19,7 @@ import { LoggerService } from '@shared/services';
 export class DivisionDivContainerComponent {
   private readonly _name = DivisionDivContainerComponent.name;
 
-  @Input() division?: PageDivision;
+  @Input() divisionWithTemplates?: PageDivisionWithTemplates;
 
   @ViewChild('defaultParagraphTemplate', { static: true })
   defaultParagraphTemplate!: TemplateRef<DivisionContent>;

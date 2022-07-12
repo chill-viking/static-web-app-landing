@@ -11,6 +11,7 @@ import { PageContents } from '@shared/models';
 import { LoggerService } from '@shared/services';
 import {
   DivTemplateDirective,
+  ParagraphTemplateDirective,
 } from '../../directives';
 import {
   PageContentsCallback,
@@ -47,6 +48,9 @@ export class PageContentControllerComponent implements OnInit, AfterContentInit 
   @ContentChild(DivTemplateDirective)
   divTemplate: DivTemplateDirective | undefined;
 
+  @ContentChild(ParagraphTemplateDirective)
+  paragraphTemplate: ParagraphTemplateDirective | undefined;
+
   @Input()
   pageSlug!: string;
 
@@ -64,7 +68,7 @@ export class PageContentControllerComponent implements OnInit, AfterContentInit 
       message: 'check if content children are visible',
       properties: {
         divTemplate: this.divTemplate,
-        paragraphTemplate: this.divTemplate?.paragraphTemplate,
+        paragraphTemplate: this.paragraphTemplate,
       },
     });
 
