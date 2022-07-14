@@ -1,0 +1,13 @@
+<ng-container *ngFor="let division of pageDivisions">
+  <ng-container [ngSwitch]="division.type">
+    <ng-container *ngSwitchCase="'div'">
+      <app-division-div-container
+        [division]="division"
+      ></app-division-div-container>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <p>Unknown division type {{ division.type }}</p>
+      <pre><p>{{ division | json }}</p></pre>
+    </ng-container>
+  </ng-container>
+</ng-container>

@@ -4,6 +4,9 @@ import {
   SharedModule,
 } from '@shared/shared.module';
 import {
+  PageContentModule,
+} from '../page-content/page-content.module';
+import {
   AboutUsRoutingModule,
 } from './about-us-routing.module';
 import {
@@ -12,12 +15,13 @@ import {
 
 @NgModule({
   declarations: [
-    AboutUsComponent
+    AboutUsComponent,
   ],
   imports: [
     CommonModule,
     AboutUsRoutingModule,
     SharedModule,
+    PageContentModule,
   ]
 })
 export class AboutUsModule { }

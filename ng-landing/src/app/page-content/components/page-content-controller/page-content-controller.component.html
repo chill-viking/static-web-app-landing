@@ -1,0 +1,11 @@
+<ng-container
+  *ngIf="pageContent$ | async as pageContent;else loading"
+>
+  <app-page-content-container
+    [pageContents]="pageContent"
+  ></app-page-content-container>
+</ng-container>
+
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>

@@ -1,6 +1,8 @@
+export type DivisionContentType = 'paragraph';
+
 export interface DivisionContent {
   id?: string;
-  type: 'paragraph' | undefined;
+  type: DivisionContentType;
   class: string;
   content: string;
 }
