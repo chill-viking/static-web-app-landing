@@ -1,19 +1,28 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { DivisionDivContainerComponent } from './division-div-container.component';
+import {
+  ComponentFixture, TestBed, waitForAsync,
+} from '@angular/core/testing';
+import {
+  DivisionDivContainerComponent,
+} from './division-div-container.component';
 
 describe('DivisionDivContainerComponent', () => {
   let component: DivisionDivContainerComponent;
   let fixture: ComponentFixture<DivisionDivContainerComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
       declarations: [ DivisionDivContainerComponent ]
-    })
-    .compileComponents();
+    }).compileComponents();
+  }));
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(DivisionDivContainerComponent);
     component = fixture.componentInstance;
+    component.division = {
+      class: '',
+      content: [],
+      type: 'div',
+    };
     fixture.detectChanges();
   });
 

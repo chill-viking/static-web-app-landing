@@ -6,10 +6,6 @@ import {
   PageContentControllerComponent,
   ParagraphContentComponent,
 } from './components';
-import {
-  DivTemplateDirective,
-  ParagraphTemplateDirective,
-} from './directives';
 
 @NgModule({
   declarations: [
@@ -17,16 +13,12 @@ import {
     PageContentControllerComponent,
     PageContentContainerComponent,
     DivisionDivContainerComponent,
-    DivTemplateDirective,
-    ParagraphTemplateDirective,
   ],
   imports: [
     CommonModule,
   ],
   exports: [
     PageContentControllerComponent,
-    DivTemplateDirective,
-    ParagraphTemplateDirective,
   ]
 })
 export class PageContentModule { }

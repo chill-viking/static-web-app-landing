@@ -1,4 +1,4 @@
-export type DivisionContentType = 'paragraph' | undefined;
+export type DivisionContentType = 'paragraph';
 
 export interface DivisionContent {
   id?: string;

@@ -18,11 +18,15 @@ describe('PageContentContainerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PageContentContainerComponent);
     component = fixture.componentInstance;
+    component.pageContents = {
+      divisions: [],
+      title: '',
+    };
+
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(component.defaultDivTemplate).toBeTruthy();
   });
 });

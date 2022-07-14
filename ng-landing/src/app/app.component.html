@@ -1,6 +1,6 @@
 <div class="app">
   <app-primary-navigation
-    [menu]="(menu$ | async) ?? defaultMenu"
-    [pageTitle]="(title$ | async)!"
+    [menu$]="menu$"
+    [pageTitle$]="title$"
   ></app-primary-navigation>
 </div>

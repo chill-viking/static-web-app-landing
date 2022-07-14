@@ -2,7 +2,6 @@ import { cold, hot } from 'jasmine-marbles';
 import {
   ComponentFixture, TestBed, waitForAsync,
 } from '@angular/core/testing';
-import { loggerSpy } from '@shared/mocks.spec';
 import {
   LoggerService, PageContentService,
 } from '@shared/services';
@@ -38,7 +37,6 @@ describe('PageContentsComponent', () => {
       declarations: [ PageContentsComponent ],
       providers: [
         { provide: PageContentService, useValue: pageContentsSpy },
-        { provide: LoggerService, useValue: loggerSpy },
       ],
     }).compileComponents();
 
@@ -68,6 +66,7 @@ describe('PageContentsComponent', () => {
         fixture.detectChanges();
 
         expect(pageContentsSpy.getPageContents).not.toHaveBeenCalled();
+        const loggerSpy = TestBed.inject(LoggerService) as jasmine.SpyObj<LoggerService>;
         expect(loggerSpy.logException).toHaveBeenCalled();
       });
     });

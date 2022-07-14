@@ -18,6 +18,11 @@ describe('ParagraphContentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ParagraphContentComponent);
     component = fixture.componentInstance;
+    component.divContent = {
+      class: '',
+      content: '',
+      type: 'paragraph',
+    };
     fixture.detectChanges();
   });
 

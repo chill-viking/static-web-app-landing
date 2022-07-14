@@ -1,12 +1,13 @@
-<ng-template appDivisionDiv let-content>
-  <app-division-div-container
-    [divisionWithTemplates]="content"
-  ></app-division-div-container>
-</ng-template>
-
-<ng-container *ngFor="let item of divisions">
-  <ng-container
-    [ngTemplateOutlet]="getTemplateRef(item.type)"
-    [ngTemplateOutletContext]="getPageDivisionContext(item)"
-  ></ng-container>
+<ng-container *ngFor="let division of pageDivisions">
+  <ng-container [ngSwitch]="division.type">
+    <ng-container *ngSwitchCase="'div'">
+      <app-division-div-container
+        [division]="division"
+      ></app-division-div-container>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <p>Unknown division type {{ division.type }}</p>
+      <pre><p>{{ division | json }}</p></pre>
+    </ng-container>
+  </ng-container>
 </ng-container>

@@ -2,12 +2,10 @@ import { hot } from 'jasmine-marbles';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { loggerSpy } from '../mocks.spec';
 import {
   NavigationMenu, PageContents,
 } from '../models';
 import { ApiService } from './api.service';
-import { LoggerService } from './logger.service';
 
 describe('ApiService', () => {
   let service: ApiService;
@@ -19,7 +17,6 @@ describe('ApiService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: HttpClient, useValue: httpSpy },
-        { provide: LoggerService, useValue: loggerSpy },
       ]
     });
     service = TestBed.inject(ApiService);

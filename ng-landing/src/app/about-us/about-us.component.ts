@@ -1,7 +1,9 @@
 
 import { Component } from '@angular/core';
 import { HasSlug } from '@shared/components';
-import { LoggerService } from '@shared/services';
+import {
+  LoggerService, PageContentService,
+} from '@shared/services';
 
 @Component({
   selector: 'app-about-us',
@@ -11,8 +13,9 @@ export class AboutUsComponent extends HasSlug {
   slug = 'about-us';
 
   constructor(
+    pageContentsSvc: PageContentService,
     private _logger: LoggerService,
   ) {
-    super();
+    super(pageContentsSvc);
   }
 }

@@ -1,12 +1,14 @@
+import { cold } from 'jasmine-marbles';
 import { MockComponent } from 'ng-mocks';
 import {
   ComponentFixture, TestBed, waitForAsync,
 } from '@angular/core/testing';
 import {
-  PageContentsComponent,
-} from '@shared/components';
-import { loggerSpy } from '@shared/mocks.spec';
-import { LoggerService } from '@shared/services';
+  PageContentService,
+} from '@shared/services';
+import {
+  PageContentControllerComponent,
+} from '../page-content/components';
 import {
   AboutUsComponent,
 } from './about-us.component';
@@ -14,15 +16,19 @@ import {
 describe('AboutUsComponent', () => {
   let component: AboutUsComponent;
   let fixture: ComponentFixture<AboutUsComponent>;
+  let pageContentSvcSpy: jasmine.SpyObj<PageContentService>;
 
   beforeEach(waitForAsync(() => {
+    pageContentSvcSpy = jasmine.createSpyObj<PageContentService>('PageContentService', ['getPageContents']);
+    pageContentSvcSpy.getPageContents.and.returnValue(cold('-'));
+
     TestBed.configureTestingModule({
       declarations: [
         AboutUsComponent,
-        MockComponent(PageContentsComponent),
+        MockComponent(PageContentControllerComponent),
       ],
       providers: [
-        { provide: LoggerService, useValue: loggerSpy },
+        { provide: PageContentService, useValue: pageContentSvcSpy },
       ],
     }).compileComponents();
 
