@@ -1,13 +1,10 @@
-import { Observable, tap } from 'rxjs';
-import {
-  distinctUntilChanged, map, shareReplay,
-} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 import {
   BreakpointObserver, Breakpoints,
 } from '@angular/cdk/layout';
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, Input,
+  ChangeDetectionStrategy, Component, Input,
 } from '@angular/core';
 import { NavigationMenu } from '@shared/models';
 import { LoggerService } from '@shared/services';
@@ -21,18 +18,15 @@ import { LoggerService } from '@shared/services';
 export class PrimaryNavigationComponent {
   isHandset$: Observable<boolean> = this._breakpointObserver.observe(Breakpoints.Handset).pipe(
     map(result => result.matches),
-    distinctUntilChanged(),
-    tap(() => this._change.detectChanges()),
     shareReplay()
   );
 
-  @Input() pageTitle: string = '';
+  @Input() pageTitle$!: Observable<string>;
 
-  @Input() menu?: NavigationMenu;
+  @Input() menu$!: Observable<NavigationMenu>;
 
   constructor(
     private _breakpointObserver: BreakpointObserver,
-    private _change: ChangeDetectorRef,
     private _logger: LoggerService,
   ) { }
 }

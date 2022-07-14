@@ -14,8 +14,8 @@ export class HomeComponent extends HasSlug {
 
   constructor(
     private _logger: LoggerService,
-    public pageContentsSvc: PageContentService,
+    pageContentsSvc: PageContentService,
   ) {
-    super();
+    super(pageContentsSvc);
   }
 }

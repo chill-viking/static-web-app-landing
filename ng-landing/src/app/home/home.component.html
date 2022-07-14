@@ -1,16 +1,4 @@
 <app-page-content-controller
-  [pageSlug]="slug"
-  [fetchFunc]="pageContentsSvc.getPageContentsAsCallback"
+  [pageContent$]="pageContents$"
 >
-  <ng-template appDivTemplate let-context>
-    <div>
-      <p>in div template</p>
-      <pre><p>{{ context.data | json }}</p></pre>
-    </div>
-  </ng-template>
-
-  <ng-template appParagraphTemplate let-context>
-    <p>in paragraph template</p>
-    <p>{{ context | json }}</p>
-  </ng-template>
 </app-page-content-controller>

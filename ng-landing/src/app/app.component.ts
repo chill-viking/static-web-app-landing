@@ -1,6 +1,7 @@
 
-import { Component, OnInit } from '@angular/core';
-import { NavigationMenu } from '@shared/models';
+import {
+  ChangeDetectionStrategy, Component, OnInit,
+} from '@angular/core';
 import {
   PageContentService,
 } from '@shared/services';
@@ -8,12 +9,9 @@ import {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  defaultMenu: NavigationMenu = {
-    currentEnvironment: '',
-    items: [],
-  };
   menu$ = this._pageContents.menu$;
   title$ = this._pageContents.currentTitle$;
 

@@ -1,15 +1,18 @@
-<!--
-  <ng-template
-    #defaultParagraphTemplate
-    let-paragraph
-  >
-    <app-paragraph-content [divContent]="paragraph"></app-paragraph-content>
-  </ng-template>
-
-  <div id="{{ division.id }}" class="{{ division.class }}">
-    <ng-container *ngFor="let divContent of division.content">
-      <ng-container *ngTemplateOutlet="getTemplateRef(divContent.type);context:getTemplateContext(divContent)"></ng-container>
-    </ng-container>  
-  </div>
--->
-<p>div element</p>
+<div
+  [ngClass]="division.class"
+  [id]="division.id"
+>
+  <ng-container *ngFor="let divContent of division.content">
+    <ng-container [ngSwitch]="divContent.type">
+      <ng-container *ngSwitchCase="'paragraph'">
+        <app-paragraph-content
+          [divContent]="divContent"
+        ></app-paragraph-content>
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        <p>Unknown content type {{ divContent.type }}</p>
+        <pre><p>{{ divContent | json }}</p></pre>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>

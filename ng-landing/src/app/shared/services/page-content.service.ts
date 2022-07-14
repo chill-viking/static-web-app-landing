@@ -1,6 +1,6 @@
 import {
-  distinctUntilChanged, first, map, Observable,
-  of, shareReplay, startWith, Subject, tap,
+  first, map, Observable, shareReplay, startWith,
+  Subject, tap,
 } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -17,14 +17,10 @@ export class PageContentService {
   private _pageContentsSubject$ = new Subject<PageContents>();
   private _navigationMenuSubject$ = new Subject<NavigationMenu>();
 
-  protected _cache: { [slug: string]: PageContents } = {};
-
-  getPageContentsAsCallback = this.getPageContents.bind(this);
   currentPageContents$ = this._pageContentsSubject$.asObservable();
   currentTitle$ = this.currentPageContents$.pipe(
-    map((content) => content?.title),
-    startWith('ChillViking | ...'),
-    distinctUntilChanged(),
+    startWith(null),
+    map((content) => content?.title ?? 'ChillViking | Loading...'),
     tap((title) => this._title.setTitle(title)),
   );
   menu$ = this._navigationMenuSubject$.asObservable().pipe(
@@ -38,16 +34,7 @@ export class PageContentService {
   ) { }
 
   private fetchPageContents(slug: string) {
-    if (!!this._cache[slug]) {
-      const result = { ...this._cache[slug] };
-      return of(result);
-    }
-
-    return this._api.getPageContents(slug).pipe(
-      tap(contents => {
-        this._cache[slug] = contents;
-      }),
-    );
+    return this._api.getPageContents(slug);
   }
 
   getPageContents(slug: string): Observable<PageContents> {

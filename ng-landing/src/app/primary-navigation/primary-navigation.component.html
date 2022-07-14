@@ -8,17 +8,22 @@
     [opened]="(isHandset$ | async) === false"
   >
     <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list *ngIf="menu !== undefined">
-      <a
-        *ngFor="let item of menu.items"
-        id="{{ item.id }}"
-        mat-list-item
-        routerLink="{{ item.route }}"
-        routerLinkActive="active"
-      >
-        {{ item.title }}
-      </a>
-    </mat-nav-list>
+    <ng-container *ngIf="menu$ | async as menu;else loading">
+      <mat-nav-list>
+        <a
+          *ngFor="let item of menu.items"
+          id="{{ item.id }}"
+          mat-list-item
+          routerLink="{{ item.route }}"
+          routerLinkActive="active"
+        >
+          {{ item.title }}
+        </a>
+      </mat-nav-list>
+    </ng-container>
+    <ng-template #loading>
+      <p>Loading...</p>
+    </ng-template>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -30,7 +35,7 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>{{ pageTitle }}</span>
+      <span>{{ pageTitle$ | async }}</span>
     </mat-toolbar>
     <div class="body">
       <router-outlet></router-outlet>
