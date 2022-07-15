@@ -29,6 +29,7 @@ import {
 import {
   BrowserAnimationsModule,
 } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
 import {
   DebugMonitoringService, LoggerService,
   MonitoringService,
@@ -60,6 +61,7 @@ import {
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    StoreModule.forRoot({}, {}),
   ],
   declarations: [
     AppComponent,
