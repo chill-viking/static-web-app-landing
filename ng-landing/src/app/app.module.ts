@@ -51,6 +51,9 @@ import {
 import {
   PrimaryNavigationComponent,
 } from './primary-navigation/primary-navigation.component';
+import {
+  metaReducers, reducers,
+} from './state/reducers';
 
 @NgModule({
   imports: [
@@ -65,9 +68,10 @@ import {
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
+    StoreModule.forRoot(reducers, { metaReducers }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   declarations: [
     AppComponent,
