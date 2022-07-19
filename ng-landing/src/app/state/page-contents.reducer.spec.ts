@@ -21,7 +21,7 @@ describe('PageContents Reducer', () => {
 
       const result = reducer({ ...initialState, currentSlug: 'hello' }, action);
 
-      expect(result).toBe({ ...initialState, currentSlug: '' });
+      expect(result).toEqual({ ...initialState, currentSlug: '' });
     });
   });
 
