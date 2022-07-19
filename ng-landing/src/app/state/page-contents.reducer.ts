@@ -18,7 +18,10 @@ export const initialState: State = {
 export const reducer = createReducer(
   initialState,
   on(actions.loadPageContents, (state: State): State => {
-    return { ...state, currentSlug: '' };
+    return {
+      ...state,
+      currentSlug: '',
+    };
   }),
   on(actions.pageContentsAlreadyLoaded, (state: State, { slug }): State => {
     return {

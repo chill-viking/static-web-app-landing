@@ -6,7 +6,7 @@ export const loadPageContents = createAction(
 );
 
 export const pageContentsAlreadyLoaded = createAction(
-  '[PageContents] Load PageContents',
+  '[PageContents] PageContents found in cache',
   props<{ slug: string }>(),
 );
 
