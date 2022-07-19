@@ -52,6 +52,9 @@ import {
   PrimaryNavigationComponent,
 } from './primary-navigation/primary-navigation.component';
 import {
+  NavigationMenuEffects, PageContentsEffects,
+} from './state/effects';
+import {
   metaReducers, reducers,
 } from './state/reducers';
 
@@ -68,10 +71,12 @@ import {
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    EffectsModule.forRoot([]),
     StoreModule.forRoot(reducers, { metaReducers }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }) : [],
+    EffectsModule.forRoot([
+      PageContentsEffects,
+      NavigationMenuEffects,
+    ]),
   ],
   declarations: [
     AppComponent,
