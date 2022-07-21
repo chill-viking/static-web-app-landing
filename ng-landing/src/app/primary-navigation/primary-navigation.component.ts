@@ -21,9 +21,9 @@ export class PrimaryNavigationComponent {
     shareReplay()
   );
 
-  @Input() pageTitle$!: Observable<string>;
+  @Input() pageTitle$!: Observable<string | undefined>;
 
-  @Input() menu$!: Observable<NavigationMenu>;
+  @Input() menu$!: Observable<NavigationMenu | undefined>;
 
   constructor(
     private _breakpointObserver: BreakpointObserver,
