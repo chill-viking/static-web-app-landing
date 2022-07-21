@@ -5,9 +5,7 @@ import { Injectable } from '@angular/core';
 import {
   Actions, createEffect, ofType,
 } from '@ngrx/effects';
-import {
-  Action, select, Store,
-} from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import {
   ApiService, LoggerService,
 } from '@shared/services';
