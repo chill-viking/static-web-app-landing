@@ -1,7 +1,5 @@
 import { NavigationMenu } from '@shared/models';
-import {
-  loadNavigationMenus, loadNavigationMenusSuccess,
-} from './actions';
+import { navActions } from './actions';
 import {
   initialState, reducer, State,
 } from './navigation-menu.reducer';
@@ -17,9 +15,9 @@ describe('NavigationMenu Reducer', () => {
     });
   });
 
-  describe(`on ${loadNavigationMenus.type}`, () => {
+  describe(`on ${navActions.loadNavigationMenus.type}`, () => {
     it('should return current state', () => {
-      const action = loadNavigationMenus();
+      const action = navActions.loadNavigationMenus();
 
       const result = reducer(initialState, action);
 
@@ -27,7 +25,7 @@ describe('NavigationMenu Reducer', () => {
     });
   });
 
-  describe(`on ${loadNavigationMenusSuccess.type}`, () => {
+  describe(`on ${navActions.loadNavigationMenusSuccess.type}`, () => {
     it('should populate state', () => {
       const data: NavigationMenu = {
         items: [
@@ -46,7 +44,7 @@ describe('NavigationMenu Reducer', () => {
         ],
         currentEnvironment: 'test',
       };
-      const action = loadNavigationMenusSuccess({ data });
+      const action = navActions.loadNavigationMenusSuccess({ data });
 
       const result = reducer(initialState, action);
 

@@ -52,7 +52,10 @@
       ],
       "extends": [
         "plugin:@ngrx/recommended-requiring-type-checking"
-      ]
+      ],
+      "rules": {
+        "@ngrx/use-consistent-global-store-name": ["warn", "_store$"]
+      }
     }
   ]
 }

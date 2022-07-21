@@ -1,5 +1,5 @@
 import { PageContents } from '@shared/models';
-import * as actions from './actions/page-contents.actions';
+import { pageActions } from './actions';
 import {
   initialState, reducer,
 } from './page-contents.reducer';
@@ -15,9 +15,9 @@ describe('PageContents Reducer', () => {
     });
   });
 
-  describe(`on ${actions.loadPageContents.type}`, () => {
+  describe(`on ${pageActions.loadPageContents.type}`, () => {
     it('should clear current slug', () => {
-      const action = actions.loadPageContents();
+      const action = pageActions.loadPageContents({ slug: 'hi' });
 
       const result = reducer({ ...initialState, currentSlug: 'hello' }, action);
 
@@ -25,9 +25,9 @@ describe('PageContents Reducer', () => {
     });
   });
 
-  describe(`on ${actions.pageContentsAlreadyLoaded.type}`, () => {
+  describe(`on ${pageActions.pageContentsAlreadyLoaded.type}`, () => {
     it('should set current slug', () => {
-      const action = actions.pageContentsAlreadyLoaded({ slug: 'hello' });
+      const action = pageActions.pageContentsAlreadyLoaded({ slug: 'hello' });
 
       const result = reducer(initialState, action);
 
@@ -35,13 +35,13 @@ describe('PageContents Reducer', () => {
     });
   });
 
-  describe(`on ${actions.loadPageContentsSuccess.type}`, () => {
+  describe(`on ${pageActions.loadPageContentsSuccess.type}`, () => {
     it('should set page contents and current slug', () => {
       const pageContents: PageContents = {
         title: '',
         divisions: []
       };
-      const action = actions.loadPageContentsSuccess({ data: pageContents, slug: 'slug1' });
+      const action = pageActions.loadPageContentsSuccess({ data: pageContents, slug: 'slug1' });
 
       const result = reducer(initialState, action);
 

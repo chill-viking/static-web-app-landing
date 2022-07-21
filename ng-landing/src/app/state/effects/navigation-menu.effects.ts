@@ -8,18 +8,18 @@ import {
 import {
   ApiService, LoggerService,
 } from '@shared/services';
-import * as actions from '../actions/navigation-menu.actions';
+import { navActions } from '../actions';
 
 @Injectable()
 export class NavigationMenuEffects {
   onLoad$ = createEffect(() => {
     return this._actions$.pipe(
-      ofType(actions.loadNavigationMenus),
+      ofType(navActions.loadNavigationMenus),
       mergeMap(() => this._apiSvc.getNavigationMenu().pipe(
-        map((data) => actions.loadNavigationMenusSuccess({ data })),
+        map((data) => navActions.loadNavigationMenusSuccess({ data })),
         catchError(error => {
           this._logger.logException(error);
-          return of(actions.loadNavigationMenusFailed());
+          return of(navActions.loadNavigationMenusFailed());
         }),
       )),
     );

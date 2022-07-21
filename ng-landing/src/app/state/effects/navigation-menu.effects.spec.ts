@@ -6,7 +6,7 @@ import {
 } from '@ngrx/effects/testing';
 import { NavigationMenu } from '@shared/models';
 import { ApiService } from '@shared/services';
-import * as actions from '../actions/navigation-menu.actions';
+import { navActions } from '../actions';
 import {
   NavigationMenuEffects,
 } from './navigation-menu.effects';
@@ -26,7 +26,7 @@ describe('NavigationMenuEffects', () => {
         NavigationMenuEffects,
         provideMockActions(() => actions$),
         { provide: ApiService, useValue: apiSpy },
-      ]
+      ],
     });
 
     effects = TestBed.inject(NavigationMenuEffects);
@@ -49,18 +49,18 @@ describe('NavigationMenuEffects', () => {
     it('should fetch menu and dispatch loaded action', () => {
       apiSpy.getNavigationMenu.and.returnValue(cold('-0|', [apiResult]));
       actions$ = hot('-a-', {
-        a: actions.loadNavigationMenus(),
+        a: navActions.loadNavigationMenus(),
       });
 
       expect(effects.onLoad$).toBeObservable(hot('--a', {
-        a: actions.loadNavigationMenusSuccess({ data: apiResult }),
+        a: navActions.loadNavigationMenusSuccess({ data: apiResult }),
       }));
       expect(apiSpy.getNavigationMenu).toHaveBeenCalled();
     });
 
     describe('when other action emitted', () => {
       it('should do nothing', () => {
-        actions$ = hot('-a-', { a: actions.loadNavigationMenusSuccess({ data: apiResult })});
+        actions$ = hot('-a-', { a: navActions.loadNavigationMenusSuccess({ data: apiResult })});
 
         expect(effects.onLoad$).toBeObservable(hot('---'));
       });

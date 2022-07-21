@@ -13,6 +13,11 @@ export const selectCurrentPageContents = createSelector(
   (s: State) => s.pageContentsBySlug[s.currentSlug],
 );
 
+export const selectLoadedPageSlugs = createSelector(
+  selectPageContentsState,
+  (s: State): ReadonlyArray<string> => Object.keys(s.pageContentsBySlug),
+);
+
 export const selectCurrentTitle = createSelector(
   selectPageContentsState,
   selectCurrentPageContents,

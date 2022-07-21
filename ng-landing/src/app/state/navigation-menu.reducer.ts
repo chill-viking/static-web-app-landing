@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import {
   NavigationElement,
 } from '@shared/models';
-import * as actions from './actions/navigation-menu.actions';
+import { navActions } from './actions';
 
 export const navigationMenuFeatureKey = 'navigationMenu';
 
@@ -20,7 +20,7 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(actions.loadNavigationMenusSuccess, (state: State, { data }): State => {
+  on(navActions.loadNavigationMenusSuccess, (state: State, { data }): State => {
     return {
       ...state,
       environment: data.currentEnvironment,

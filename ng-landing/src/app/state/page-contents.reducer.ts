@@ -1,7 +1,6 @@
-import { state } from '@angular/animations';
 import { createReducer, on } from '@ngrx/store';
 import { PageContents } from '@shared/models';
-import * as actions from './actions/page-contents.actions';
+import { pageActions } from './actions';
 
 export const pageContentsFeatureKey = 'pageContents';
 
@@ -17,19 +16,19 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(actions.loadPageContents, (state: State): State => {
+  on(pageActions.loadPageContents, (state: State): State => {
     return {
       ...state,
       currentSlug: '',
     };
   }),
-  on(actions.pageContentsAlreadyLoaded, (state: State, { slug }): State => {
+  on(pageActions.pageContentsAlreadyLoaded, (state: State, { slug }): State => {
     return {
       ...state,
       currentSlug: slug,
     };
   }),
-  on(actions.loadPageContentsSuccess, (state: State, { data, slug }): State => {
+  on(pageActions.loadPageContentsSuccess, (state: State, { data, slug }): State => {
     return {
       ...state,
       currentSlug: slug,
