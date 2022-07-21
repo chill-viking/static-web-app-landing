@@ -18,7 +18,7 @@ export class DebugMonitoringService extends LoggerService {
   logTrace(message: string, properties?: { [key: string]: any; } | undefined): void {
     console.trace(`Trace: ${message}`, { properties });
   }
-  logDebug(opts: { className?: string | undefined; funcOrPropName?: string | undefined; message?: string | undefined; properties?: { [key: string]: any; } | undefined; }): void {
+  logDebug(opts: { className?: string; funcOrPropName?: string; message?: string; properties?: { [key: string]: any; }; }): void {
     const message = [
       opts.className,
       opts.funcOrPropName,

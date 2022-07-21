@@ -53,7 +53,7 @@ export class MonitoringService extends LoggerService {
     this._appInsights?.trackTrace({ message }, properties);
   }
 
-  logDebug(opts: { className?: string | undefined; funcOrPropName?: string | undefined; message?: string | undefined; properties?: { [key: string]: any; } | undefined; }): void {
+  logDebug(_: { className?: string; funcOrPropName?: string; message?: string; properties?: { [key: string]: any; }; }): void {
     // nothing to see here.
   }
 }
