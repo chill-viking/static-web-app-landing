@@ -1,31 +1,27 @@
-import { cold } from 'jasmine-marbles';
 import { MockComponent } from 'ng-mocks';
 import {
   ComponentFixture, TestBed, waitForAsync,
 } from '@angular/core/testing';
 import {
-  createPageContentSpy,
-} from '@shared/mocks.spec';
+  MockStore, provideMockStore,
+} from '@ngrx/store/testing';
 import { NavigationMenu } from '@shared/models';
-import {
-  PageContentService,
-} from '@shared/services';
-import {
-  spyPropertyGetter,
-} from '@shared/utils.spec';
 import { AppComponent } from './app.component';
 import {
   PrimaryNavigationComponent,
 } from './primary-navigation/primary-navigation.component';
+import { navActions } from './state/actions';
+import {
+  fromNav, fromPage,
+} from './state/selectors';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
-  let pageContentSvcSpy: jasmine.SpyObj<PageContentService>;
   let navigationMenu: NavigationMenu;
+  let mockStore: MockStore;
 
   beforeEach(waitForAsync(() => {
-    pageContentSvcSpy = createPageContentSpy();
     navigationMenu = {
       currentEnvironment: 'testing',
       items: [{
@@ -35,8 +31,6 @@ describe('AppComponent', () => {
         type: 'routerLink',
       }],
     };
-    spyPropertyGetter(pageContentSvcSpy, 'currentTitle$').and.returnValue(cold('0-', ['ChillViking | ...']));
-    spyPropertyGetter(pageContentSvcSpy, 'menu$').and.returnValue(cold('-0-', [navigationMenu]));
 
     TestBed.configureTestingModule({
       imports: [],
@@ -45,21 +39,34 @@ describe('AppComponent', () => {
         MockComponent(PrimaryNavigationComponent),
       ],
       providers: [
-        { provide: PageContentService, useValue: pageContentSvcSpy },
+        provideMockStore({
+          selectors: [{
+            selector: fromNav.selectNavigationMenu,
+            value: navigationMenu,
+          }, {
+            selector: fromPage.selectCurrentTitle,
+            value: '',
+          }]
+        })
       ],
     }).compileComponents();
   }));
 
   beforeEach(() => {
+    mockStore = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
+  });
 
-    fixture.detectChanges();
+  afterEach(() => {
+    mockStore.resetSelectors();
   });
 
   it('should create the app', () => {
+    const dispatchSpy = spyOn(mockStore, 'dispatch');
+    fixture.detectChanges();
+
     expect(component).toBeTruthy();
-    expect(component.title$).toBeObservable(cold('0-', ['ChillViking | ...']));
-    expect(pageContentSvcSpy.publishNavigationMenu).toHaveBeenCalled();
+    expect(dispatchSpy).toHaveBeenCalledWith(navActions.loadNavigationMenus());
   });
 });

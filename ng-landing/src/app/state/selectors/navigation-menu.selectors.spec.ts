@@ -6,26 +6,28 @@ describe('NavigationMenu Selectors', () => {
     const state = {
       [reducer.navigationMenuFeatureKey]: {
         ...reducer.initialState,
-        menus: [
-          {
+        menu: {
+          items: [{
             id: 'x',
             title: 'title',
             route: 'route',
             type: 'routerLink',
-          },
-        ],
+          }],
+          currentEnvironment: 'hello',
+        },
       },
     };
 
-    const result = selectors.selectNavigationMenus(state);
+    const result = selectors.selectNavigationMenu(state);
 
-    expect(result).toEqual([
-      {
+    expect(result).toEqual({
+      items: [{
         id: 'x',
         title: 'title',
         route: 'route',
         type: 'routerLink',
-      },
-    ]);
+      }],
+      currentEnvironment: 'hello',
+    });
   });
 });

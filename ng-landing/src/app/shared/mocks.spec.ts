@@ -1,6 +1,4 @@
-import {
-  LoggerService, PageContentService,
-} from './services';
+import { LoggerService } from './services';
 
 export function createLoggerSpy(): jasmine.SpyObj<LoggerService> {
   return jasmine.createSpyObj<LoggerService>('MonitoringService', [
@@ -8,16 +6,5 @@ export function createLoggerSpy(): jasmine.SpyObj<LoggerService> {
     'logException',
     'logMetric',
     'logPageView',
-  ]);
-}
-
-export function createPageContentSpy(): jasmine.SpyObj<PageContentService> {
-  return jasmine.createSpyObj<PageContentService>('PageContentService', [
-    'getPageContents',
-    'publishNavigationMenu',
-  ], [
-    'currentPageContents$',
-    'currentTitle$',
-    'menu$',
   ]);
 }

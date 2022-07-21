@@ -51,20 +51,7 @@ describe('NavigationMenu Reducer', () => {
       const expectedState: State = {
         ...initialState,
         environment: 'test',
-        menus: [
-          {
-            id: 'x',
-            route: 'route1',
-            title: 'title1',
-            type: 'routerLink',
-          },
-          {
-            id: 'x',
-            route: 'route2',
-            title: 'title2',
-            type: 'externalLink',
-          },
-        ],
+        menu: data,
       };
       expect(result).toEqual(expectedState);
     });

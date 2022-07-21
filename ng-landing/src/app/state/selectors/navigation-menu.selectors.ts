@@ -7,7 +7,7 @@ import {
 
 const selectNavigationMenuState = createFeatureSelector<State>(navigationMenuFeatureKey);
 
-export const selectNavigationMenus = createSelector(
+export const selectNavigationMenu = createSelector(
   selectNavigationMenuState,
-  (s: State) => s.menus,
+  (s: State) => s.menu,
 );
