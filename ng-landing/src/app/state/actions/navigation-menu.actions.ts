@@ -9,3 +9,7 @@ export const loadNavigationMenusSuccess = createAction(
   '[NavigationMenu] Load NavigationMenus Success',
   props<{ data: NavigationMenu }>(),
 );
+
+export const loadNavigationMenusFailed = createAction(
+  '[NavigationMenu] Load NavigationMenus Failed',
+);
