@@ -47,7 +47,7 @@ describe('MonitoringService', () => {
     service.logEvent('name');
     expect(appInsightsSpy.trackEvent).toHaveBeenCalled();
 
-    service.logException({} as Error, 1);
+    service.logException('message', {} as Error, 1);
     expect(appInsightsSpy.trackException).toHaveBeenCalled();
 
     service.logMetric('name', 1);

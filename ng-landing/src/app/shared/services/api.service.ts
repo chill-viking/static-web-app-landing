@@ -41,7 +41,7 @@ export class ApiService {
         },
       }).pipe(
       catchError(error => {
-        this._logger.logException(error, 1);
+        this._logger.logException(`Getting Page Contents for '${slug}'`, error, 1);
         return of({ data: this.createDefault('Failed to retrieve data') });
       }),
       map((result) => result.data),
@@ -51,7 +51,7 @@ export class ApiService {
   getNavigationMenu(): Observable<NavigationMenu> {
     return this._http.get<Result<NavigationMenu>>('/api/navigation-menu').pipe(
       catchError(error => {
-        this._logger.logException(error, 1);
+        this._logger.logException('Getting Navigation Menu', error, 1);
         return of({ data: {} as NavigationMenu });
       }),
       map((result) => result.data),

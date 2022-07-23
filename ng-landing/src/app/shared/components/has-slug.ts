@@ -1,26 +1,24 @@
-import { first, Subject, tap } from 'rxjs';
-import { Directive, OnInit } from '@angular/core';
-import { PageContents } from '@shared/models';
 import {
-  PageContentService,
-} from '@shared/services';
+  pageActions,
+} from 'src/app/state/actions';
+import {
+  fromPage,
+} from 'src/app/state/selectors';
+import { Directive, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 @Directive()
 export abstract class HasSlug implements OnInit {
-  private _pageContentsSubject$ = new Subject<PageContents>();
-
   abstract slug: string;
 
-  pageContents$ = this._pageContentsSubject$.asObservable();
+  pageContents$ = this._store$.select(fromPage.selectCurrentPageContents);
 
   constructor(
-    private _pageContentsSvc: PageContentService,
+    private _store$: Store,
   ) { }
 
   ngOnInit(): void {
-    this._pageContentsSvc.getPageContents(this.slug).pipe(
-      first(),
-      tap((contents) => this._pageContentsSubject$.next(contents)),
-    ).subscribe();
+    // TODO: move load dispatch into a guard.
+    this._store$.dispatch(pageActions.loadPageContents({ slug: this.slug }));
   }
 }

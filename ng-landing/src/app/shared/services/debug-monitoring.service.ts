@@ -12,18 +12,20 @@ export class DebugMonitoringService extends LoggerService {
   logMetric(name: string, average: number, properties?: { [key: string]: any; } | undefined): void {
     console.log(`Metric: ${name}`, { average, properties });
   }
-  logException(exception: Error, severityLevel?: number | undefined): void {
-    console.error(`Exception: ${exception.message}`, { exception, severityLevel });
+  logException(message: string, exception: Error, severityLevel?: number | undefined): void {
+    console.error(`${message}, Exception: ${exception.message}`, { exception, severityLevel });
   }
   logTrace(message: string, properties?: { [key: string]: any; } | undefined): void {
     console.trace(`Trace: ${message}`, { properties });
   }
-  logDebug(opts: { className?: string | undefined; funcOrPropName?: string | undefined; message?: string | undefined; properties?: { [key: string]: any; } | undefined; }): void {
+  logDebug(opts: { className?: string; funcOrPropName?: string; message?: string; properties?: { [key: string]: any; }; }): void {
     const message = [
       opts.className,
       opts.funcOrPropName,
       opts.message,
     ].filter(s => !!s).join(' >> ');
-    console.debug(message, opts.properties);
+
+    if (!!opts.properties) console.debug(message, opts.properties);
+    else console.debug(message);
   }
 }

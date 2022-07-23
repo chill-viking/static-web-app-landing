@@ -1,11 +1,10 @@
-import { cold } from 'jasmine-marbles';
 import { MockComponent } from 'ng-mocks';
 import {
   ComponentFixture, TestBed, waitForAsync,
 } from '@angular/core/testing';
 import {
-  PageContentService,
-} from '@shared/services';
+  MockStore, provideMockStore,
+} from '@ngrx/store/testing';
 import {
   PageContentControllerComponent,
 } from '../page-content/components';
@@ -16,26 +15,28 @@ import {
 describe('AboutUsComponent', () => {
   let component: AboutUsComponent;
   let fixture: ComponentFixture<AboutUsComponent>;
-  let pageContentSvcSpy: jasmine.SpyObj<PageContentService>;
+  let mockStore: MockStore;
 
   beforeEach(waitForAsync(() => {
-    pageContentSvcSpy = jasmine.createSpyObj<PageContentService>('PageContentService', ['getPageContents']);
-    pageContentSvcSpy.getPageContents.and.returnValue(cold('-'));
-
     TestBed.configureTestingModule({
       declarations: [
         AboutUsComponent,
         MockComponent(PageContentControllerComponent),
       ],
       providers: [
-        { provide: PageContentService, useValue: pageContentSvcSpy },
+        provideMockStore(),
       ],
     }).compileComponents();
 
+    mockStore = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(AboutUsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
+
+  afterEach(() => {
+    mockStore.resetSelectors();
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

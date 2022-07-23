@@ -54,17 +54,17 @@ describe('ApiService', () => {
         if (!!defaultedResponse) {
           it('should return defaulted response', () => {
             httpSpy.get.and.returnValue(hot('-#-', null, { error: 'err' }));
-    
+
             const result$ = serviceFunc(service);
-    
+
             expect(result$).toBeObservable(hot('-(0|)', [defaultedResponse]));
           });
         } else {
           it('should return empty object', () => {
             httpSpy.get.and.returnValue(hot('-#-', null, { error: 'err' }));
-    
+
             const result$ = serviceFunc(service);
-    
+
             expect(result$).toBeObservable(hot('-(0|)', [{}]));
           });
         }

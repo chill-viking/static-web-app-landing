@@ -24,7 +24,7 @@ export class PageContentControllerComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.pageContent$) {
-      this._logger.logException(new Error('pageContent$ not provided.'));
+      this._logger.logException('pageContent$ not provided.', new Error());
       return;
     }
   }

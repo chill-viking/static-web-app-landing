@@ -34,7 +34,10 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "no-trailing-spaces": ["error"],
+        "no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 0 }],
+        "eol-last": ["error", "always"]
       }
     },
     {
@@ -44,7 +47,21 @@
       "extends": [
         "plugin:@angular-eslint/template/recommended"
       ],
-      "rules": {}
+      "rules": {
+        "no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 0 }],
+        "eol-last": ["error", "always"]
+      }
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "plugin:@ngrx/recommended-requiring-type-checking"
+      ],
+      "rules": {
+        "@ngrx/use-consistent-global-store-name": ["warn", "_store$"]
+      }
     }
   ]
 }

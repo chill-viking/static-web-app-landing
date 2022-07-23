@@ -1,10 +1,9 @@
-
 import {
   ChangeDetectionStrategy, Component, OnInit,
 } from '@angular/core';
-import {
-  PageContentService,
-} from '@shared/services';
+import { Store } from '@ngrx/store';
+import { LoggerService } from '@shared/services';
+import { navActions } from './state/actions';
 
 @Component({
   selector: 'app-root',
@@ -12,14 +11,12 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  menu$ = this._pageContents.menu$;
-  title$ = this._pageContents.currentTitle$;
-
   constructor(
-    private _pageContents: PageContentService,
+    private _store$: Store,
+    private _logger: LoggerService,
   ) { }
 
   ngOnInit(): void {
-    this._pageContents.publishNavigationMenu();
+    this._store$.dispatch(navActions.loadNavigationMenus());
   }
 }
