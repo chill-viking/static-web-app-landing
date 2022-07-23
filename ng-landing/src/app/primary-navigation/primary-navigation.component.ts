@@ -1,13 +1,18 @@
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import {
+  debounceTime, map, shareReplay, tap,
+} from 'rxjs/operators';
 import {
   BreakpointObserver, Breakpoints,
 } from '@angular/cdk/layout';
 import {
-  ChangeDetectionStrategy, Component, Input,
+  ChangeDetectionStrategy, Component,
 } from '@angular/core';
-import { NavigationMenu } from '@shared/models';
+import { Store } from '@ngrx/store';
 import { LoggerService } from '@shared/services';
+import {
+  fromNav, fromPage,
+} from '../state/selectors';
 
 @Component({
   selector: 'app-primary-navigation',
@@ -21,12 +26,16 @@ export class PrimaryNavigationComponent {
     shareReplay()
   );
 
-  @Input() pageTitle$!: Observable<string | undefined>;
+  pageTitle$ = this._store$.select(fromPage.selectCurrentTitle).pipe(
+    tap((title) => this._logger.logDebug({ className: 'PrimaryNav', funcOrPropName: 'pageTitle$', message: title })),
+    debounceTime(150),
+  );
 
-  @Input() menu$!: Observable<NavigationMenu | undefined>;
+  menu$ = this._store$.select(fromNav.selectNavigationMenu);
 
   constructor(
     private _breakpointObserver: BreakpointObserver,
+    private _store$: Store,
     private _logger: LoggerService,
   ) { }
 }
