@@ -8,7 +8,7 @@ export abstract class LoggerService {
 
   abstract logMetric(name: string, average: number, properties?: { [key: string]: any }): void;
 
-  abstract logException(exception: Error, severityLevel?: number): void;
+  abstract logException(message: string, exception: Error, severityLevel?: number): void;
 
   abstract logTrace(message: string, properties?: { [key: string]: any }): void;
 

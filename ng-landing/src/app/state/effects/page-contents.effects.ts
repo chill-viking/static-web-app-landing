@@ -1,5 +1,5 @@
 import {
-  catchError, map, mergeMap, Observable, of,
+  first, map, mergeMap, Observable, of, tap,
 } from 'rxjs';
 import { Injectable } from '@angular/core';
 import {
@@ -18,10 +18,7 @@ export class PageContentsEffects {
     return this._actions$.pipe(
       ofType(pageActions.loadPageContents),
       mergeMap(({ slug }) => this.getLoadAction(slug).pipe(
-        catchError(error => {
-          this._logger.logException(error);
-          return of(pageActions.loadPageContentsFailed({ error, slug }));
-        }),
+        tap((action) => this._logger.logDebug({ message: 'got load action', properties: { action } })),
       )),
     );
   });
@@ -35,6 +32,7 @@ export class PageContentsEffects {
 
   private getLoadAction(slug: string): Observable<Action> {
     return this._store$.select(fromPage.selectLoadedPageSlugs).pipe(
+      first(),
       mergeMap((loaded) => {
         if (loaded.includes(slug)) {
           return of(pageActions.pageContentsAlreadyLoaded({ slug }));

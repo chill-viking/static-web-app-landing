@@ -12,8 +12,8 @@ export class DebugMonitoringService extends LoggerService {
   logMetric(name: string, average: number, properties?: { [key: string]: any; } | undefined): void {
     console.log(`Metric: ${name}`, { average, properties });
   }
-  logException(exception: Error, severityLevel?: number | undefined): void {
-    console.error(`Exception: ${exception.message}`, { exception, severityLevel });
+  logException(message: string, exception: Error, severityLevel?: number | undefined): void {
+    console.error(`${message}, Exception: ${exception.message}`, { exception, severityLevel });
   }
   logTrace(message: string, properties?: { [key: string]: any; } | undefined): void {
     console.trace(`Trace: ${message}`, { properties });

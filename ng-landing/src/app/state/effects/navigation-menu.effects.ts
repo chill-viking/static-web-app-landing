@@ -1,6 +1,4 @@
-import {
-  catchError, map, mergeMap, of,
-} from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import {
   Actions, createEffect, ofType,
@@ -17,10 +15,7 @@ export class NavigationMenuEffects {
       ofType(navActions.loadNavigationMenus),
       mergeMap(() => this._apiSvc.getNavigationMenu().pipe(
         map((data) => navActions.loadNavigationMenusSuccess({ data })),
-        catchError(error => {
-          this._logger.logException(error);
-          return of(navActions.loadNavigationMenusFailed());
-        }),
+        tap((action) => this._logger.logDebug({ message: 'navigation menu action to be dispatched', properties: { action }})),
       )),
     );
   });

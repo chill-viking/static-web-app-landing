@@ -13,9 +13,6 @@ export class PageNotFoundComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._logger.logException({
-      message: `User landed on '${this._router.url}' somehow.`,
-      name: 'PageNotFound',
-    })
+    this._logger.logException(`User landed on '${this._router.url}' somehow.`, new Error());
   }
 }

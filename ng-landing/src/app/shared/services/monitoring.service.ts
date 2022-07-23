@@ -45,8 +45,8 @@ export class MonitoringService extends LoggerService {
     this._appInsights?.trackMetric({ name, average }, properties);
   }
 
-  logException(exception: Error, severityLevel?: number) {
-    this._appInsights?.trackException({ exception, severityLevel });
+  logException(message: string, exception: Error, severityLevel?: number) {
+    this._appInsights?.trackException({ exception, severityLevel }, { message });
   }
 
   logTrace(message: string, properties?: { [key: string]: any }) {
