@@ -6,5 +6,6 @@ export function createLoggerSpy(): jasmine.SpyObj<LoggerService> {
     'logException',
     'logMetric',
     'logPageView',
+    'logDebug',
   ]);
 }

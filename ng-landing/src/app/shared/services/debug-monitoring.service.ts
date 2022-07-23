@@ -24,6 +24,8 @@ export class DebugMonitoringService extends LoggerService {
       opts.funcOrPropName,
       opts.message,
     ].filter(s => !!s).join(' >> ');
-    console.debug(message, opts.properties);
+
+    if (!!opts.properties) console.debug(message, opts.properties);
+    else console.debug(message);
   }
 }

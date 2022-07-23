@@ -29,7 +29,7 @@ describe('DebugMonitoringService', () => {
     service.logEvent('name');
     expect(consoleSpy.log).toHaveBeenCalled();
 
-    service.logException({} as Error, 1);
+    service.logException('message', {} as Error, 1);
     expect(consoleSpy.error).toHaveBeenCalled();
 
     service.logMetric('name', 1);

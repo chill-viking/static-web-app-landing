@@ -35,7 +35,7 @@ describe('PageContents Selectors', () => {
   describe('selecting current page contents', () => {
     it('should select the feature state', () => {
       const result = selectors.selectCurrentPageContents(basicState);
-  
+
       expect(result).toEqual(slug1);
     });
 
