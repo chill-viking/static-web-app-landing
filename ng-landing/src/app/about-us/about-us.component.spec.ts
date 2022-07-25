@@ -40,6 +40,5 @@ describe('AboutUsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(component.slug).toEqual('about-us');
   });
 });

@@ -57,12 +57,12 @@ describe('PageContents Selectors', () => {
       });
 
       describe('when current slug is not available', () => {
-        it('should return undefined', () => {
+        it('should return default', () => {
           const state = adjustCurrentSlug('slug2');
 
           const result = selectors.selectCurrentTitle({ [reducer.pageContentsFeatureKey]: state });
 
-          expect(result).toBeUndefined();
+          expect(result).toEqual('ChillViking | Loading...');
         });
       });
     });
