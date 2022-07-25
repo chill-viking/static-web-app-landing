@@ -54,8 +54,8 @@ describe('LoadPageSlugGuard', () => {
         route.data = { notASlug: 'not a slug' };
         const result = guard.canActivate(route);
 
-        expect(result).toBeTruthy();
         expect(result).toBeTrue();
+        expect(dispatchSpy).not.toHaveBeenCalled();
       });
     });
   });

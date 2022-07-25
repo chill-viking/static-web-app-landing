@@ -1,39 +1,16 @@
-import { takeWhile, tap } from 'rxjs';
+import { NgModule } from '@angular/core';
 import {
-  Injectable, NgModule,
-} from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import {
-  RouterModule, RouterStateSnapshot, Routes,
-  TitleStrategy,
+  RouterModule, Routes, TitleStrategy,
 } from '@angular/router';
-import { Store } from '@ngrx/store';
 import {
   LoadPageSlugGuard,
 } from './load-page-slug.guard';
 import {
   PageNotFoundComponent,
 } from './page-not-found/page-not-found.component';
-import { fromPage } from './state/selectors';
-
-@Injectable({ providedIn: 'root' })
-export class PageTitleStrategy extends TitleStrategy {
-  private _title$ = this._store$.select(fromPage.selectCurrentTitle);
-
-  constructor(
-    private _store$: Store,
-    private readonly _title: Title,
-  ) {
-    super();
-  }
-
-  updateTitle(_snapshot: RouterStateSnapshot): void {
-    this._title$.pipe(
-      takeWhile((t) => t.includes("Loading..."), true),
-      tap((title) => this._title.setTitle(title)),
-    ).subscribe();
-  }
-}
+import {
+  PageTitleStrategy,
+} from './page-title-strategy';
 
 const routes: Routes = [
   {
@@ -57,6 +34,6 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     { provide: TitleStrategy, useClass: PageTitleStrategy },
-  ]
+  ],
 })
 export class AppRoutingModule { }
