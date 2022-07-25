@@ -27,7 +27,7 @@ export class PageTitleStrategy extends TitleStrategy {
     super();
   }
 
-  updateTitle(snapshot: RouterStateSnapshot): void {
+  updateTitle(_snapshot: RouterStateSnapshot): void {
     this._title$.pipe(
       takeWhile((t) => t.includes("Loading..."), true),
       tap((title) => this._title.setTitle(title)),
