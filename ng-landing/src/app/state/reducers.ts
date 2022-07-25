@@ -19,9 +19,13 @@ export const reducers: ActionReducerMap<State> = {
 
 export function logReducer(reducer: ActionReducer<any>): ActionReducer<any> {
   return function(state, action) {
-    console.log('%c New action emitted', 'background: #222; color: #bada55', { state, action });
+    console.log('%c New action to be emitted', 'background: #222; color: #bada55', { state, action });
 
-    return reducer(state, action);
+    const newState = reducer(state, action);
+
+    console.log('%c New action emitted', 'background: #222; color: #bada55', { state: newState });
+
+    return newState;
   };
 }
 
