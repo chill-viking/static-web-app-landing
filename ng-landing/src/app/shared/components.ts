@@ -1,1 +1,1 @@
-export * from './components/has-slug';
+export * from './components/has-page-content';

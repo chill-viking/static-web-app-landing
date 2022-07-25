@@ -21,5 +21,5 @@ export const selectLoadedPageSlugs = createSelector(
 export const selectCurrentTitle = createSelector(
   selectPageContentsState,
   selectCurrentPageContents,
-  (_, pageContents?: PageContents) => pageContents?.title,
+  (_, pageContents?: PageContents) => pageContents?.title ?? 'ChillViking | Loading...',
 );

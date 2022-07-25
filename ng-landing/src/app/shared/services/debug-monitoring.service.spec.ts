@@ -1,5 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import {
+  createConsoleSpy,
+} from '@shared/mocks.spec';
+import {
   DebugMonitoringService,
 } from './debug-monitoring.service';
 
@@ -8,11 +11,7 @@ describe('DebugMonitoringService', () => {
   let consoleSpy: jasmine.SpyObj<Console>;
 
   beforeEach(() => {
-    consoleSpy = jasmine.createSpyObj<Console>('Console', [
-      'log',
-      'error',
-      'trace',
-    ]);
+    consoleSpy = createConsoleSpy();
     console = consoleSpy;
 
     TestBed.configureTestingModule({
@@ -33,12 +32,12 @@ describe('DebugMonitoringService', () => {
     expect(consoleSpy.error).toHaveBeenCalled();
 
     service.logMetric('name', 1);
-    expect(console.log).toHaveBeenCalled();
+    expect(consoleSpy.log).toHaveBeenCalled();
 
     service.logPageView('name');
-    expect(console.log).toHaveBeenCalled();
+    expect(consoleSpy.log).toHaveBeenCalled();
 
     service.logTrace('message');
-    expect(console.trace).toHaveBeenCalled();
+    expect(consoleSpy.trace).toHaveBeenCalled();
   });
 });

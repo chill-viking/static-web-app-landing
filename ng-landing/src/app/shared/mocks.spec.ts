@@ -9,3 +9,11 @@ export function createLoggerSpy(): jasmine.SpyObj<LoggerService> {
     'logDebug',
   ]);
 }
+
+export function createConsoleSpy(): jasmine.SpyObj<Console> {
+  return jasmine.createSpyObj<Console>('Console', [
+    'log',
+    'error',
+    'trace',
+  ]);
+}
